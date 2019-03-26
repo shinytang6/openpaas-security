@@ -2,6 +2,7 @@ package deployment
 
 import (
 	"fmt"
+
 	apps_v1beta1 "k8s.io/api/apps/v1beta1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	meta_v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
