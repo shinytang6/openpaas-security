@@ -13,18 +13,27 @@ import (
 )
 
 func main() {
+	clientset := client.InitClient()
+	deploymentClient := clientset.AppsV1beta1().Deployments("default")
+	deployment := generate_deployment("./examples/nginx.yaml")
+	deploy.CreateDeployment(deploymentClient, deployment)
+
+
+
+	serviceClient := clientset.CoreV1().Services("default")
+	service := generate_service("./examples/nginx_svc.yaml")
+	svc.CreateService(serviceClient, service)
+}
+
+func generate_deployment(filename string) apps_v1beta1.Deployment {
 	var (
 		deployYaml []byte
 		deployJson []byte
 		deployment = apps_v1beta1.Deployment{}
-		serviceYaml []byte
-		serviceJson []byte
-		service = core_v1.Service{}
 		err error
 	)
-	clientset := client.InitClient()
-	deploymentClient := clientset.AppsV1beta1().Deployments("default")
-	if deployYaml, err = ioutil.ReadFile("./nginx.yaml"); err != nil {
+
+	if deployYaml, err = ioutil.ReadFile(filename); err != nil {
 		panic(err.Error())
 	}
 
@@ -35,23 +44,27 @@ func main() {
 	if err = json.Unmarshal(deployJson, &deployment); err != nil {
 		panic(err.Error())
 	}
+	return deployment
+}
 
-	deploy.CreateDeployment(deploymentClient, deployment)
+func generate_service(filename string) core_v1.Service {
+	var (
+		serviceYaml []byte
+		serviceJson []byte
+		service = core_v1.Service{}
+		err error
+	)
 
-
-
-	serviceClient := clientset.CoreV1().Services("default")
-	if serviceYaml, err = ioutil.ReadFile("./nginx_svc.yaml"); err != nil {
+	if serviceYaml, err = ioutil.ReadFile(filename); err != nil {
 		panic(err.Error())
 	}
 
 	if serviceJson, err = yaml.ToJSON(serviceYaml); err != nil {
 		panic(err.Error())
 	}
-	// JSON转struct
+
 	if err = json.Unmarshal(serviceJson, &service); err != nil {
 		panic(err.Error())
 	}
-
-	svc.CreateService(serviceClient, service)
+	return service
 }
