@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: dvwa
+spec:
+  replicas: 2
+  selector:
+    app: dvwa
+  template:
+    metadata:
+      labels:
+        app: dvwa
+    spec:
+      containers:
+        - name: dvwa
+          image: citizenstig/dvwa:latest
+          ports:
+          - containerPort: 80
+1

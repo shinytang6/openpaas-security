@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dvwa
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dvwa
+  template:
+    metadata:
+      labels:
+        app: dvwa
+    spec:
+      containers:
+        - name: dvwa
+          image: citizenstig/dvwa:latest
+          ports:
+            - containerPort: 80
+        - name: vnc
+          image: dorowu/ubuntu-desktop-lxde-vnc
+          ports:
+            - containerPort: 80
