@@ -1,20 +1,21 @@
 <template>
   <div id="app">
     <vHeader></vHeader>
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <SideBar></SideBar>
+    <router-view/>
   </div>
 </template>
 
 <script>
 import vHeader from './components/Header.vue'
-import HelloWorld from './components/HelloWorld.vue'
+import SideBar from './components/SideBar.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld,
-    vHeader
+
+    vHeader,
+    SideBar,
   }
 }
 </script>
@@ -26,6 +27,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+
+}
+body {
+ background-color: #E8E5E5;
+
 }
 </style>
