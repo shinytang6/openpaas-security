@@ -72,7 +72,6 @@ export default {
     height: 500px;
     width: 100%;
     height: 100%;
-
 }
 
 .experiments-wrapper {

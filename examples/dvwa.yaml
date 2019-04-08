@@ -16,4 +16,3 @@ spec:
           image: citizenstig/dvwa:latest
           ports:
           - containerPort: 80
-1
