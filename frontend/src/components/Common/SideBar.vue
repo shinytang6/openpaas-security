@@ -15,14 +15,14 @@
             <i class="el-icon-menu"></i>
             <span slot="title" @click="goToExperiment">课程实验</span>
           </el-menu-item>
-          <!--<el-menu-item index="2">-->
-            <!--<i class="el-icon-document"></i>-->
-            <!--<span slot="title">导航三</span>-->
-          <!--</el-menu-item>-->
-          <!--<el-menu-item index="3">-->
-            <!--<i class="el-icon-setting"></i>-->
-            <!--<span slot="title">导航四</span>-->
-          <!--</el-menu-item>-->
+          <el-menu-item index="2">
+            <i class="el-icon-document"></i>
+            <span slot="title" @click="addExperiment">添加实验</span>
+          </el-menu-item>
+          <el-menu-item index="3">
+            <i class="el-icon-setting"></i>
+            <span slot="title" @click="manageExperiment">管理实验</span>
+          </el-menu-item>
         </el-menu>
       </el-col>
     </el-row>
@@ -38,6 +38,16 @@ export default {
         name: "ListExperiments",
       });
     },
+    addExperiment() {
+      this.$router.push({
+        name: "AddExperiments",
+      });
+    },
+    manageExperiment() {
+      this.$router.push({
+        name: "ManageExperiments",
+      });
+    }
   }
 }
 </script>

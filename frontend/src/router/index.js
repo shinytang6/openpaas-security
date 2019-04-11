@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Experiment from "../components/Experiment"
-import ListExperiments from "../components/ListExperiments"
-import Header from "../components/Header"
-import SideBar from "../components/SideBar"
+import Experiment from "../components/Student/Experiment"
+import ListExperiments from "../components/Student/ListExperiments"
+import AddExperiments from "../components/Teacher/AddExperiments"
+import ManageExperiments from "../components/Teacher/ManageExperiments"
+import Header from "../components/Common/Header"
+import SideBar from "../components/Common/SideBar"
 
 Vue.use(Router)
 
@@ -30,6 +32,16 @@ export default new Router({
             path: '/experiment',
             name: 'Experiment',
             component: Experiment
+        },
+        {
+            path: '/teacher/add',
+            name: 'AddExperiments',
+            component: AddExperiments
+        },
+        {
+            path: '/teacher/manage',
+            name: 'ManageExperiments',
+            component: ManageExperiments
         },
     ]
 })

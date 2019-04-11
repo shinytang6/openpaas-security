@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import vHeader from './components/Header.vue'
-import SideBar from './components/SideBar.vue'
+import vHeader from './components/Common/Header.vue'
+import SideBar from './components/Common/SideBar.vue'
 
 export default {
   name: 'app',

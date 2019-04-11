@@ -8,7 +8,7 @@
       background-color="#2F4056"
       text-color="#fff"
       active-text-color="#ffd04b">
-      <el-menu-item index="1" class="logo"><img alt="Vue logo" src="../assets/logo.jpg" ></el-menu-item>
+      <el-menu-item index="1" class="logo"><img alt="Vue logo" src="../../assets/logo.jpg" ></el-menu-item>
       <el-menu-item index="2" class="title">网络安全实验平台</el-menu-item>
       <el-submenu index="3" class="identity">
         <template slot="title">管理员</template>

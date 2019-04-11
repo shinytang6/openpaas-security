@@ -69,8 +69,6 @@ export default {
 .experiments {
     position: fixed;
     left: 220px;
-    height: 500px;
-    width: 100%;
     height: 100%;
 }
 
@@ -81,7 +79,7 @@ export default {
 }
 
 .experiments-wrapper .experiment-item {
-    flex: 0 0 25%;
+    flex: 0 0 33%;
     margin-bottom: 30px;
 
 }

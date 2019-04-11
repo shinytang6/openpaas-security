@@ -2,6 +2,7 @@ package models
 
 import (
 	db "github.com/shinytang6/openpaas-security/backend/database"
+	"strconv"
 )
 
 type Experiment struct {
@@ -55,4 +56,15 @@ func (e *Experiment) GetExperiment(id int, experimentId int, name string) (exper
 		return
 	}
 	return
+}
+
+
+func CreateExperiment(name string, experimentNum int) (err error) {
+	for i:=0; i<experimentNum; i++ {
+		_, err := db.SqlDB.Query("INSERT INTO Experiment(experimentId, name) VALUES(?, ?)", i, name+"_"+strconv.Itoa(i))
+		if err != nil {
+			return err
+		}
+	}
+	return err
 }

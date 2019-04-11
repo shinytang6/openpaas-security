@@ -16,5 +16,7 @@ func initRouter() *gin.Engine {
 
 	router.GET("/api/experiment/get", apis.GetExperimentApi)
 
+	router.GET("/api/experiment/add", apis.CreateExperiment)
+
 	return router
 }

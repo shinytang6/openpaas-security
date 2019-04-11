@@ -68,3 +68,19 @@ func GetExperimentApi(c *gin.Context) {
 		"msg": msg,
 	})
 }
+
+func CreateExperiment(c *gin.Context) {
+	name := c.Query("name")
+	experimentNum, _ := strconv.Atoi(c.Query("experimentNum"))
+
+
+	err := models.CreateExperiment(name, experimentNum)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	msg := fmt.Sprintf("create successful")
+	c.JSON(http.StatusOK, gin.H{
+		//"data": experiment,
+		"msg": msg,
+	})
+}
