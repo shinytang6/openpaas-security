@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Experiment from "../components/Student/Experiment"
 import ListExperiments from "../components/Student/ListExperiments"
 import AddExperiments from "../components/Teacher/AddExperiments"
+import UpdateExperiments from "../components/Teacher/UpdateExperiments"
 import ManageExperiments from "../components/Teacher/ManageExperiments"
 import Header from "../components/Common/Header"
 import SideBar from "../components/Common/SideBar"
@@ -43,5 +44,10 @@ export default new Router({
             name: 'ManageExperiments',
             component: ManageExperiments
         },
+        {
+            path: '/teacher/update',
+            name: 'UpdateExperiments',
+            component: UpdateExperiments
+        }
     ]
 })

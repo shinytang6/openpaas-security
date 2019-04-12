@@ -11,6 +11,12 @@
                     width="50">
             </el-table-column>
             <el-table-column
+                    type="experimentId"
+                    label="实验序号"
+                    prop="experimentId"
+                    width="50">
+            </el-table-column>
+            <el-table-column
                     label="日期"
                     prop="date">
             </el-table-column>
@@ -19,8 +25,8 @@
                     prop="name">
             </el-table-column>
             <el-table-column
-                    label="实验总数"
-                    prop="name">
+                    label="实验状态"
+                    prop="status">
             </el-table-column>
             <el-table-column
                     align="right">
@@ -49,26 +55,11 @@
         name: 'manageExperiments',
         data() {
             return {
-                tableData: [{
-                    date: '2016-05-02',
-                    name: '王小虎1',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎2',
-                    address: '上海市普陀区金沙江路 1517 弄'
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎3',
-                    address: '上海市普陀区金沙江路 1519 弄'
-                }, {
-                    date: '2016-05-03',
-                    name: '王小虎4',
-                    address: '上海市普陀区金沙江路 1516 弄'
-                }],
+                tableData: [],
                 search: ''
             }
         },
+        inject: ['reload'],
         mounted: function(){
             var that = this
             this.$axios.get('/api/experiment/getall')
@@ -77,6 +68,7 @@
                         // that.experimentArr = response.data.data
                         console.log("tes!!")
                         console.log(response.data.data)
+                        that.tableData = response.data.data
                     }
                 })
                 .catch(function (error) {
@@ -86,9 +78,30 @@
         methods: {
             handleEdit(index, row) {
                 console.log(index, row);
+                this.$router.push({
+                    name: "UpdateExperiments",
+                    params: {
+                        index: index,
+                        data: row
+                    }
+                });
             },
             handleDelete(index, row) {
                 console.log(index, row);
+                var that = this
+                this.$axios.get('/api/experiment/delete?name='+row.name)
+                    .then(function (response) {
+                        if(response.status == 200) {
+                            // that.experimentArr = response.data.data
+                            console.log("tes!!")
+                            console.log(response.data.data)
+                            that.tableData = response.data.data
+                            that.reload()
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             }
         },
     }

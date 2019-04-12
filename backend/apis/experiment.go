@@ -33,12 +33,7 @@ func AddExperimentApi(c *gin.Context) {
 
 
 func GetAllExperimentsApi(c *gin.Context) {
-	//experimentId := c.Request.FormValue("experimentId")
-	//name := c.Request.FormValue("name")
-	experimentId, _ := strconv.Atoi(c.Query("experimentId"))
-	name := c.Query("name")
-
-	e := models.Experiment{ExperimentId: experimentId, Name: name}
+	e := models.Experiment{}
 
 	experiments, err := e.GetExperiments()
 	if err != nil {
@@ -71,10 +66,23 @@ func GetExperimentApi(c *gin.Context) {
 
 func CreateExperiment(c *gin.Context) {
 	name := c.Query("name")
-	experimentNum, _ := strconv.Atoi(c.Query("experimentNum"))
+	people, _ := strconv.Atoi(c.Query("people"))
+	date := c.Query("date")
 
+	err := models.CreateExperiment(name, people, date)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	msg := fmt.Sprintf("create successful")
+	c.JSON(http.StatusOK, gin.H{
+		//"data": experiment,
+		"msg": msg,
+	})
+}
 
-	err := models.CreateExperiment(name, experimentNum)
+func DeleteExperiment(c *gin.Context) {
+	name := c.Query("name")
+	err := models.DeleteExperiment(name)
 	if err != nil {
 		log.Fatalln(err)
 	}
