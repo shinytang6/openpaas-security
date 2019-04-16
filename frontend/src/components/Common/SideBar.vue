@@ -31,6 +31,11 @@
             <i class="el-icon-setting"></i>
             <span slot="title">Cadvisor</span>
           </el-menu-item>
+
+          <el-menu-item index="5" @click="manageStudent">
+            <i class="el-icon-setting"></i>
+            <span slot="title">学生管理</span>
+          </el-menu-item>
         </el-menu>
       </el-col>
     </el-row>
@@ -86,6 +91,11 @@ export default {
     goToCadvisor() {
       this.$router.push({
         name: "CAdvisor",
+      });
+    },
+    manageStudent() {
+      this.$router.push({
+        name: "ManageStudents",
       });
     }
   }

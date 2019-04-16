@@ -15,14 +15,14 @@
         position: fixed;
         left: 220px;
         height: 500px;
-        width: 100%;
+        width: 90%;
         height: 100%;
         /*background-color: red;*/
     }
     .cadvisor .content {
         position: fixed;
         left: 220px;
-        width: 100%;
+        width: 1600%;
         height: 100%;
         top: 0;
     }

@@ -12,6 +12,7 @@ import CAdvisor from "../components/SystemAdmin/CAdvisor"
 import Settings from "../components/Common/Settings"
 import LoginPage from "../components/Common/LoginPage"
 
+import ManageStudents from "../components/UserAdmin/ManageStudents"
 Vue.use(Router)
 
 export default new Router({
@@ -72,6 +73,11 @@ export default new Router({
             path: '/login',
             name: 'LoginPage',
             component: LoginPage
-        }
+        },
+        {
+            path: '/useradmin/manage/student',
+            name: 'ManageStudents',
+            component: ManageStudents
+        },
     ]
 })

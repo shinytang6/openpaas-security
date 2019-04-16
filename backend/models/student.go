@@ -31,3 +31,23 @@ func (s *Student) GetStudent(name string, password string) (student Student, err
 	}
 	return
 }
+
+func (s *Student) GetStudents() (students []Student, err error) {
+	students = make([]Student, 0)
+	rows, err := db.SqlDB.Query("SELECT * FROM Student")
+	defer rows.Close()
+
+	if err != nil {
+		return
+	}
+
+	for rows.Next() {
+		var student Student
+		rows.Scan(&student.UserId, &student.Password, &student.Name, &student.StudentId, &student.Class, &student.Email, &student.Phone)
+		students = append(students, student)
+	}
+	if err = rows.Err(); err != nil {
+		return
+	}
+	return
+}

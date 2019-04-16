@@ -17,7 +17,7 @@
         <el-menu-item index="3-2" @click="logOut">退出</el-menu-item>
         <!--<el-menu-item index="3-3">选项3</el-menu-item>-->
       </el-submenu>
-      <el-menu-item index="4" class="identity" v-show="identity=='未登录'" @click="login">未登录</el-menu-item>
+      <el-menu-item index="4" class="identity" v-show="identity=='未登录'" @click="login">登录</el-menu-item>
     </el-menu>
 </div>
 </template>

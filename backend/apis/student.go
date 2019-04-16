@@ -49,3 +49,17 @@ func LoginStudentApi(c *gin.Context) {
 		"msg": msg,
 	})
 }
+
+func GetAllStudentsApi(c *gin.Context) {
+	s := models.Student{}
+
+	students, err := s.GetStudents()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	msg := fmt.Sprintf("get successful %d", students)
+	c.JSON(http.StatusOK, gin.H{
+		"data": students,
+		"msg": msg,
+	})
+}

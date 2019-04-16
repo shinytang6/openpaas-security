@@ -24,5 +24,7 @@ func initRouter() *gin.Engine {
 	router.GET("/api/student/get", apis.GetStudentApi)
 
 	router.GET("/api/student/login", apis.LoginStudentApi)
+
+	router.GET("/api/student/getall", apis.GetAllStudentsApi)
 	return router
 }
