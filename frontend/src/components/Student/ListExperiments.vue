@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { setCookie, getCookie } from '../../js/cookieUtil'
 export default {
   name: 'listExperiments',
   data(){
@@ -26,16 +27,25 @@ export default {
   },
   mounted: function(){
       var that = this
-      this.$axios.get('/api/experiment/getall')
-          .then(function (response) {
-              if(response.status == 200) {
-                  that.experimentArr = response.data.data
-                  console.log(that.experimentArr)
-              }
-          })
-          .catch(function (error) {
-              console.log(error);
-          });
+      if (this.isLogin==undefined || this.isLogin=="") {
+      } else {
+          this.$axios.get('/api/experiment/getall')
+              .then(function (response) {
+                  if (response.status == 200) {
+                      that.experimentArr = response.data.data
+                      console.log(that.experimentArr)
+                  }
+              })
+              .catch(function (error) {
+                  console.log(error);
+              });
+      }
+  },
+  computed: {
+        isLogin () {
+            this.userId = getCookie("userId");
+            return this.userId;
+        }
   },
   methods: {
     showDetail: function(experiment){

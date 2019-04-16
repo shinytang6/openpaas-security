@@ -9,6 +9,8 @@ import Header from "../components/Common/Header"
 import SideBar from "../components/Common/SideBar"
 import DashBoard from "../components/SystemAdmin/DashBoard"
 import CAdvisor from "../components/SystemAdmin/CAdvisor"
+import Settings from "../components/Common/Settings"
+import LoginPage from "../components/Common/LoginPage"
 
 Vue.use(Router)
 
@@ -60,6 +62,16 @@ export default new Router({
             path: '/cadvisor',
             name: 'CAdvisor',
             component: CAdvisor
+        },
+        {
+            path: '/settings',
+            name: 'Settings',
+            component: Settings
+        },
+        {
+            path: '/login',
+            name: 'LoginPage',
+            component: LoginPage
         }
     ]
 })

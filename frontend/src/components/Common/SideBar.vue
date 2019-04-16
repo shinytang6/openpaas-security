@@ -1,6 +1,6 @@
 <template>
 <div class="sidebar">
-    <el-row class="tac">
+    <el-row class="tac" v-show="identity!='未登录'">
       <el-col :span="12">
         <h5>自定义颜色</h5>
         <el-menu
@@ -38,8 +38,30 @@
 </template>
 
 <script>
+import { setCookie, getCookie } from '../../js/cookieUtil'
 export default {
   name: 'sidebar',
+  data() {
+    return {
+      identity: "",
+    }
+  },
+  mounted () {
+    if (this.isLogin==undefined || this.isLogin=="") {
+      // this.$router.replace('/login');
+      this.identity = "未登录"
+    } else {
+      // 执行后续操作
+      this.identity = "管理员"
+      // this.phone = getCookie("phone");
+    }
+  },
+  computed: {
+    isLogin () {
+      this.userId = getCookie("userId");
+      return this.userId;
+    }
+  },
   methods: {
     goToExperiment() {
       this.$router.push({
