@@ -1,5 +1,5 @@
 <template>
-<div class="experiment">
+<div class="experiment-vnc">
      <iframe class="content" src="http://192.168.99.100:32333/"></iframe>
 </div>
 </template>
@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style>
-.experiment {
+.experiment-vnc {
      position: fixed;
      left: 220px;
      height: 500px;
@@ -19,7 +19,7 @@ export default {
      height: 100%;
      /*background-color: red;*/
 }
-.experiment .content {
+.experiment-vnc .content {
      position: fixed;
      left: 220px;
      width: 100%;

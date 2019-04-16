@@ -70,6 +70,7 @@ export default {
     position: fixed;
     left: 220px;
     height: 100%;
+    width: 80%;
 }
 
 .experiments-wrapper {

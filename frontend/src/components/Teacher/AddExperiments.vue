@@ -72,6 +72,7 @@
                         var { name, date1, date2, people } = this.$refs[formName].model
                         var date_value =date2.getFullYear() + '-' + (date2.getMonth() + 1) + '-' + date2.getDate() + ' ' + date2.getHours() + ':' + date2.getMinutes() + ':' + date2.getSeconds();
                         console.log("date", date_value)
+                        var that= this
                         this.$axios.get('/api/experiment/add?name='+name+'&people='+people+'&date='+date_value)
                             .then(function (response) {
                                 if(response.status == 200) {
@@ -83,6 +84,9 @@
                                     //     // }
                                     // });
                                     console.log(response)
+                                    that.$router.push({
+                                        name: "ListExperiments",
+                                    });
                                 }
                             })
                             .catch(function (error) {

@@ -7,6 +7,8 @@ import UpdateExperiments from "../components/Teacher/UpdateExperiments"
 import ManageExperiments from "../components/Teacher/ManageExperiments"
 import Header from "../components/Common/Header"
 import SideBar from "../components/Common/SideBar"
+import DashBoard from "../components/SystemAdmin/DashBoard"
+import CAdvisor from "../components/SystemAdmin/CAdvisor"
 
 Vue.use(Router)
 
@@ -48,6 +50,16 @@ export default new Router({
             path: '/teacher/update',
             name: 'UpdateExperiments',
             component: UpdateExperiments
+        },
+        {
+            path: '/dashboard',
+            name: 'DashBoard',
+            component: DashBoard
+        },
+        {
+            path: '/cadvisor',
+            name: 'CAdvisor',
+            component: CAdvisor
         }
     ]
 })

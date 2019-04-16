@@ -11,17 +11,25 @@
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#ffd04b">
-          <el-menu-item index="1">
+          <el-menu-item index="1" @click="goToExperiment">
             <i class="el-icon-menu"></i>
-            <span slot="title" @click="goToExperiment">课程实验</span>
+            <span slot="title">课程实验</span>
           </el-menu-item>
-          <el-menu-item index="2">
+          <el-menu-item index="2" @click="addExperiment">
             <i class="el-icon-document"></i>
-            <span slot="title" @click="addExperiment">添加实验</span>
+            <span slot="title">添加实验</span>
           </el-menu-item>
-          <el-menu-item index="3">
+          <el-menu-item index="3" @click="manageExperiment">
             <i class="el-icon-setting"></i>
-            <span slot="title" @click="manageExperiment">管理实验</span>
+            <span slot="title">管理实验</span>
+          </el-menu-item>
+          <el-menu-item index="4" @click="goToDashboard">
+            <i class="el-icon-setting"></i>
+            <span slot="title">Dashboard</span>
+          </el-menu-item>
+          <el-menu-item index="5" @click="goToCadvisor">
+            <i class="el-icon-setting"></i>
+            <span slot="title">Cadvisor</span>
           </el-menu-item>
         </el-menu>
       </el-col>
@@ -46,6 +54,16 @@ export default {
     manageExperiment() {
       this.$router.push({
         name: "ManageExperiments",
+      });
+    },
+    goToDashboard() {
+      this.$router.push({
+        name: "DashBoard",
+      });
+    },
+    goToCadvisor() {
+      this.$router.push({
+        name: "CAdvisor",
       });
     }
   }
