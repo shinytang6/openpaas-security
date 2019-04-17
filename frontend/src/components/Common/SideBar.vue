@@ -40,6 +40,15 @@
             <i class="el-icon-setting"></i>
             <span slot="title">添加学生</span>
           </el-menu-item>
+
+          <el-menu-item index="5" @click="manageTeacher">
+            <i class="el-icon-setting"></i>
+            <span slot="title">教师管理</span>
+          </el-menu-item>
+          <el-menu-item index="5" @click="addTeacher">
+            <i class="el-icon-setting"></i>
+            <span slot="title">添加教师</span>
+          </el-menu-item>
         </el-menu>
       </el-col>
     </el-row>
@@ -105,6 +114,16 @@ export default {
     addStudent() {
       this.$router.push({
         name: "AddStudents",
+      });
+    },
+    manageTeacher() {
+      this.$router.push({
+        name: "ManageTeachers",
+      });
+    },
+    addTeacher() {
+      this.$router.push({
+        name: "AddTeachers",
       });
     }
   }

@@ -32,5 +32,11 @@ func initRouter() *gin.Engine {
 	router.GET("/api/student/delete", apis.DeleteStudent)
 
 	router.GET("/api/student/add", apis.CreateStudent)
+
+
+	router.GET("/api/teacher/getall", apis.GetAllTeachersApi)
+	router.GET("/api/teacher/update", apis.UpdateTeacherApi)
+	router.GET("/api/teacher/delete", apis.DeletTeacher)
+	router.GET("/api/teacher/add", apis.CreateTeacher)
 	return router
 }
