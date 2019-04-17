@@ -36,7 +36,7 @@
                     studentId: '',
                     class: '',
                     email: '',
-                    phone: false,
+                    phone: '',
                 }
             }
         },

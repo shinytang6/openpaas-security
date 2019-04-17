@@ -63,3 +63,57 @@ func GetAllStudentsApi(c *gin.Context) {
 		"msg": msg,
 	})
 }
+
+func UpdateStudentApi(c *gin.Context) {
+	name := c.Query("name")
+	password := c.Query("password")
+	studentId := c.Query("studentId")
+	class := c.Query("class")
+	email := c.Query("email")
+	phone := c.Query("phone")
+
+	fmt.Println("test")
+	fmt.Println(name, password, studentId, class, email, phone)
+	s := models.Student{}
+
+	err := s.UpdateStudent(name, password, studentId, class, email, phone)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	msg := fmt.Sprintf("update successful")
+	c.JSON(http.StatusOK, gin.H{
+		"msg": msg,
+	})
+}
+
+func DeleteStudent(c *gin.Context) {
+	name := c.Query("name")
+	err := models.DeleteStudent(name)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	msg := fmt.Sprintf("delete successful")
+	c.JSON(http.StatusOK, gin.H{
+		//"data": experiment,
+		"msg": msg,
+	})
+}
+
+func CreateStudent(c *gin.Context) {
+	name := c.Query("name")
+	password := c.Query("password")
+	studentId := c.Query("studentId")
+	class := c.Query("class")
+	email := c.Query("email")
+	phone := c.Query("phone")
+
+	err := models.CreateStudent(name, password, studentId, class, email, phone)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	msg := fmt.Sprintf("create successful")
+	c.JSON(http.StatusOK, gin.H{
+		//"data": experiment,
+		"msg": msg,
+	})
+}

@@ -86,7 +86,7 @@ func DeleteExperiment(c *gin.Context) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	msg := fmt.Sprintf("create successful")
+	msg := fmt.Sprintf("delete successful")
 	c.JSON(http.StatusOK, gin.H{
 		//"data": experiment,
 		"msg": msg,

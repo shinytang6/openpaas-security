@@ -13,6 +13,8 @@ import Settings from "../components/Common/Settings"
 import LoginPage from "../components/Common/LoginPage"
 
 import ManageStudents from "../components/UserAdmin/ManageStudents"
+import UpdateStudents from "../components/UserAdmin/UpdateStudents"
+import AddStudents from "../components/UserAdmin/AddStudents"
 Vue.use(Router)
 
 export default new Router({
@@ -78,6 +80,16 @@ export default new Router({
             path: '/useradmin/manage/student',
             name: 'ManageStudents',
             component: ManageStudents
+        },
+        {
+            path: '/useradmin/update/student',
+            name: 'UpdateStudents',
+            component: UpdateStudents
+        },
+        {
+            path: '/useradmin/add/student',
+            name: 'AddStudents',
+            component: AddStudents
         },
     ]
 })

@@ -32,7 +32,7 @@
 
 <script>
     export default {
-        name: 'listExperiments',
+        name: 'updateExperiments',
         data() {
             return {
                 ruleForm: {

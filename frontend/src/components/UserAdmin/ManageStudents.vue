@@ -85,7 +85,7 @@
             handleEdit(index, row) {
                 console.log(index, row);
                 this.$router.push({
-                    name: "UpdateExperiments",
+                    name: "UpdateStudents",
                     params: {
                         index: index,
                         data: row
@@ -95,7 +95,7 @@
             handleDelete(index, row) {
                 console.log(index, row);
                 var that = this
-                this.$axios.get('/api/experiment/delete?name='+row.name)
+                this.$axios.get('/api/student/delete?name='+row.name)
                     .then(function (response) {
                         if(response.status == 200) {
                             // that.experimentArr = response.data.data

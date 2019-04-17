@@ -51,3 +51,32 @@ func (s *Student) GetStudents() (students []Student, err error) {
 	}
 	return
 }
+
+func (s *Student) UpdateStudent(name string, password string, studentId string, class string, email string, phone string) error {
+	_, err := db.SqlDB.Exec("UPDATE Student SET name=?, password=?, studentId=?, class=?, email=?, phone=? where name=?", name, password, studentId, class, email, phone, name)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DeleteStudent(name string) (err error) {
+	rows, err := db.SqlDB.Query("DELETE FROM Student where name=?", name)
+	defer rows.Close()
+	if err != nil {
+		return
+	}
+	return err
+}
+
+func CreateStudent(name string, password string, studentId string, class string, email string, phone string) error {
+	_, err := db.SqlDB.Exec("INSERT INTO Student (name, password, studentId, class, email, phone) VALUES(?, ?, ?, ?, ?, ?)", name, password, studentId, class, email, phone)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

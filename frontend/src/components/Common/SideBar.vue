@@ -36,6 +36,10 @@
             <i class="el-icon-setting"></i>
             <span slot="title">学生管理</span>
           </el-menu-item>
+          <el-menu-item index="5" @click="addStudent">
+            <i class="el-icon-setting"></i>
+            <span slot="title">添加学生</span>
+          </el-menu-item>
         </el-menu>
       </el-col>
     </el-row>
@@ -96,6 +100,11 @@ export default {
     manageStudent() {
       this.$router.push({
         name: "ManageStudents",
+      });
+    },
+    addStudent() {
+      this.$router.push({
+        name: "AddStudents",
       });
     }
   }
