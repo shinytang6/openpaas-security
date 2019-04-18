@@ -10,7 +10,7 @@ func initRouter() *gin.Engine {
 
 	router.GET("/", apis.IndexApi)
 
-	router.POST("/api/experiment/add", apis.AddExperimentApi)
+	//router.POST("/api/experiment/add", apis.AddExperimentApi)
 
 	router.GET("/api/experiment/getall", apis.GetAllExperimentsApi)
 

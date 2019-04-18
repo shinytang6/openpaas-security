@@ -74,11 +74,14 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         var { name, password, teacherId, email, phone } = this.$refs[formName].model
-                        console.log("CJT", this.$refs[formName].model)
+                        var that = this
                         this.$axios.get('/api/teacher/update?name='+name+'&password='+password+'&teacherId='+teacherId+'&email='+email+'&phone='+phone)
                             .then(function (response) {
                                 if(response.status == 200) {
                                     console.log(response)
+                                    that.$router.push({
+                                        name: "ManageTeachers",
+                                    });
                                 }
                             })
                             .catch(function (error) {

@@ -66,10 +66,11 @@ func GetExperimentApi(c *gin.Context) {
 
 func CreateExperiment(c *gin.Context) {
 	name := c.Query("name")
+	config := c.Query("config")
 	people, _ := strconv.Atoi(c.Query("people"))
 	date := c.Query("date")
 
-	err := models.CreateExperiment(name, people, date)
+	err := models.CreateExperiment(name, config, people, date)
 	if err != nil {
 		log.Fatalln(err)
 	}

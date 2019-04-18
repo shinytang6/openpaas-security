@@ -32,20 +32,20 @@
             <span slot="title">Cadvisor</span>
           </el-menu-item>
 
-          <el-menu-item index="5" @click="manageStudent">
+          <el-menu-item index="6" @click="manageStudent">
             <i class="el-icon-setting"></i>
             <span slot="title">学生管理</span>
           </el-menu-item>
-          <el-menu-item index="5" @click="addStudent">
+          <el-menu-item index="7" @click="addStudent">
             <i class="el-icon-setting"></i>
             <span slot="title">添加学生</span>
           </el-menu-item>
 
-          <el-menu-item index="5" @click="manageTeacher">
+          <el-menu-item index="8" @click="manageTeacher">
             <i class="el-icon-setting"></i>
             <span slot="title">教师管理</span>
           </el-menu-item>
-          <el-menu-item index="5" @click="addTeacher">
+          <el-menu-item index="9" @click="addTeacher">
             <i class="el-icon-setting"></i>
             <span slot="title">添加教师</span>
           </el-menu-item>

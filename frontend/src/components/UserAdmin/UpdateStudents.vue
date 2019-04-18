@@ -80,10 +80,14 @@
                     if (valid) {
                         var { name, password, studentId, clas, email, phone } = this.$refs[formName].model
                         var cls = this.$refs[formName].model.class
+                        var that = this
                         this.$axios.get('/api/student/update?name='+name+'&password='+password+'&studentId='+studentId+'&class='+cls+'&email='+email+'&phone='+phone)
                             .then(function (response) {
                                 if(response.status == 200) {
                                     console.log(response)
+                                    that.$router.push({
+                                        name: "ManageStudents",
+                                    });
                                 }
                             })
                             .catch(function (error) {

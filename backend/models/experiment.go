@@ -62,16 +62,17 @@ func (e *Experiment) GetExperiment(id int, experimentId int, name string) (exper
 }
 
 
-func CreateExperiment(name string, people int, date string) (err error) {
+func CreateExperiment(name string, config string, people int, date string) (err error) {
 	// wtf??? QueryRow
 	row := db.SqlDB.QueryRow("SELECT max(experimentId) FROM Experiment")
 	var max int
 	row.Scan(&max)
 	for i:=0; i<people; i++ {
-		_, err := db.SqlDB.Query("INSERT INTO Experiment(experimentId, personId, date, name) VALUES(?, ?, ?, ?)", max+1, i, date, name+"_"+strconv.Itoa(i))
+		_, err := db.SqlDB.Query("INSERT INTO Experiment(experimentId, config, personId, date, name) VALUES(?, ?, ?, ?, ?)", max+1, config, i, date, name+"_"+strconv.Itoa(i))
 		if err != nil {
 			return err
 		}
+
 	}
 	return err
 }

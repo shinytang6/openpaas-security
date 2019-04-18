@@ -19,6 +19,9 @@
                     </el-form-item>
                 </el-col>
             </el-form-item>
+            <el-form-item label="配置文件" prop="config">
+                <el-input v-model="ruleForm.config"></el-input>
+            </el-form-item>
             <el-form-item label="实验人数" prop="people">
                 <el-input type="people" v-model.number="ruleForm.people" autocomplete="off"></el-input>
             </el-form-item>
@@ -40,8 +43,7 @@
                     // region: '',
                     date1: '',
                     date2: '',
-                    // resource: '',
-                    // desc: '',
+                    config: '',
                     people: '',
                 },
                 rules: {
@@ -55,9 +57,9 @@
                     date2: [
                         { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
                     ],
-                    // desc: [
-                    //     { required: true, message: '请填写活动形式', trigger: 'blur' }
-                    // ],
+                    config: [
+                        { required: true, message: '请输入配置文件地址', trigger: 'blur' },
+                    ],
                     people: [
                         { required: true, message: '年龄不能为空'},
                         { type: 'number', message: '年龄必须为数字值'}
@@ -69,11 +71,11 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        var { name, date1, date2, people } = this.$refs[formName].model
+                        var { name, date1, date2, config, people } = this.$refs[formName].model
                         var date_value =date2.getFullYear() + '-' + (date2.getMonth() + 1) + '-' + date2.getDate() + ' ' + date2.getHours() + ':' + date2.getMinutes() + ':' + date2.getSeconds();
                         console.log("date", date_value)
                         var that= this
-                        this.$axios.get('/api/experiment/add?name='+name+'&people='+people+'&date='+date_value)
+                        this.$axios.get('/api/experiment/add?name='+name+'&config='+config+'&people='+people+'&date='+date_value)
                             .then(function (response) {
                                 if(response.status == 200) {
                                     // that.$router.push({
