@@ -6,7 +6,7 @@ spec:
   ports:
     - port: 80
       targetPort: 80
-      nodePort: 32333
+#      nodePort: 32333
   selector:
     app: vnc
   type: NodePort

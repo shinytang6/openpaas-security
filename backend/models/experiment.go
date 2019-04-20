@@ -4,6 +4,8 @@ import (
 	"fmt"
 	db "github.com/shinytang6/openpaas-security/backend/database"
 	"strconv"
+
+	"github.com/shinytang6/openpaas-security/utils"
 )
 
 type Experiment struct {
@@ -68,6 +70,7 @@ func CreateExperiment(name string, config string, people int, date string) (err 
 	var max int
 	row.Scan(&max)
 	for i:=0; i<people; i++ {
+		utils.StartOneExperiment()
 		_, err := db.SqlDB.Query("INSERT INTO Experiment(experimentId, config, personId, date, name) VALUES(?, ?, ?, ?, ?)", max+1, config, i, date, name+"_"+strconv.Itoa(i))
 		if err != nil {
 			return err
