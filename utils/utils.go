@@ -15,28 +15,32 @@ import (
 )
 
 var clientset *kubernetes.Clientset
-var index int = 0
+var index int
 //var globalpath string = ""
 
 // 不能写在StartOneExperiment里面, 会报错, 所以改成导入包时就初始化client
 func init() {
 	clientset = client.InitClient()
+	index = 0
 }
 
 func StartOneExperiment(config string) {
-	index ++
+	index += 1
 	deploymentClient := clientset.AppsV1beta1().Deployments("default")
-	//deployment := GenerateDeployment(config)
-	//deploy.CreateDeployment(deploymentClient, deployment)
+	serviceClient := clientset.CoreV1().Services("default")
 
+	deployment := GenerateDeployment("../examples/dvwa.yaml")
+	deploy.CreateDeployment(deploymentClient, deployment)
+	service := GenerateService("../examples/dvwa_svc.yaml")
+	svc.CreateService(serviceClient, service)
 
 	vncdeployment := GenerateDeployment("../examples/vnc.yaml")
-	vncdeployment = createNewDeployment(vncdeployment, "vnc" + strconv.Itoa(index))
+	vncdeployment = updateDeployment(vncdeployment, "vnc" + strconv.Itoa(index))
 	deploy.CreateDeployment(deploymentClient, vncdeployment)
 
-	serviceClient := clientset.CoreV1().Services("default")
-	service := GenerateService("../examples/vnc_svc.yaml")
-	svc.CreateService(serviceClient, service)
+	vncservice := GenerateService("../examples/vnc_svc.yaml")
+	vncservice = updateService(vncservice, "vnc" + strconv.Itoa(index))
+	svc.CreateService(serviceClient, vncservice)
 }
 
 func GenerateDeployment(filename string) apps_v1beta1.Deployment {
@@ -83,10 +87,16 @@ func GenerateService(filename string) core_v1.Service {
 	return service
 }
 
-func createNewDeployment(deployment apps_v1beta1.Deployment, name string) apps_v1beta1.Deployment{
+func updateDeployment(deployment apps_v1beta1.Deployment, name string) apps_v1beta1.Deployment{
 	deployment.ObjectMeta.Name = name
 	deployment.Spec.Selector.MatchLabels = map[string]string{"app": name}
 	deployment.Spec.Template.Labels = map[string]string{"app": name}
 	deployment.Spec.Template.Spec.Containers[0].Name = name
 	return  deployment
+}
+
+func updateService(svc core_v1.Service, name string) core_v1.Service {
+	svc.ObjectMeta.Name = name
+	svc.Spec.Selector = map[string]string{"app": name}
+	return svc
 }

@@ -11,44 +11,48 @@
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#ffd04b">
-          <el-menu-item index="1" @click="goToExperiment">
+
+          <el-menu-item index="1" @click="goToExperiment" v-show="identity=='学生'">
             <i class="el-icon-menu"></i>
             <span slot="title">课程实验</span>
           </el-menu-item>
-          <el-menu-item index="2" @click="addExperiment">
+
+          <el-menu-item index="2" @click="addExperiment" v-show="identity=='教师'">
             <i class="el-icon-document"></i>
             <span slot="title">添加实验</span>
           </el-menu-item>
-          <el-menu-item index="3" @click="manageExperiment">
+          <el-menu-item index="3" @click="manageExperiment" v-show="identity=='教师'">
             <i class="el-icon-setting"></i>
             <span slot="title">管理实验</span>
           </el-menu-item>
-          <el-menu-item index="4" @click="goToDashboard">
+
+          <el-menu-item index="4" @click="goToDashboard" v-show="identity=='系统管理'">
             <i class="el-icon-setting"></i>
             <span slot="title">Dashboard</span>
           </el-menu-item>
-          <el-menu-item index="5" @click="goToCadvisor">
+          <el-menu-item index="5" @click="goToCadvisor" v-show="identity=='系统管理'">
             <i class="el-icon-setting"></i>
             <span slot="title">Cadvisor</span>
           </el-menu-item>
 
-          <el-menu-item index="6" @click="manageStudent">
+          <el-menu-item index="6" @click="manageStudent" v-show="identity=='用户管理'">
             <i class="el-icon-setting"></i>
             <span slot="title">学生管理</span>
           </el-menu-item>
-          <el-menu-item index="7" @click="addStudent">
+          <el-menu-item index="7" @click="addStudent" v-show="identity=='用户管理'">
             <i class="el-icon-setting"></i>
             <span slot="title">添加学生</span>
           </el-menu-item>
 
-          <el-menu-item index="8" @click="manageTeacher">
+          <el-menu-item index="8" @click="manageTeacher" v-show="identity=='用户管理'">
             <i class="el-icon-setting"></i>
             <span slot="title">教师管理</span>
           </el-menu-item>
-          <el-menu-item index="9" @click="addTeacher">
+          <el-menu-item index="9" @click="addTeacher" v-show="identity=='用户管理'">
             <i class="el-icon-setting"></i>
             <span slot="title">添加教师</span>
           </el-menu-item>
+
         </el-menu>
       </el-col>
     </el-row>
@@ -65,19 +69,20 @@ export default {
     }
   },
   mounted () {
-    if (this.isLogin==undefined || this.isLogin=="") {
+    var identity = this.isLogin
+    if (identity == undefined || identity == "") {
       // this.$router.replace('/login');
       this.identity = "未登录"
-    } else {
-      // 执行后续操作
-      this.identity = "管理员"
-      // this.phone = getCookie("phone");
+    } else if (identity == "学生") {
+      this.identity = "学生"
+    } else if (identity == "教师") {
+      this.identity = "教师"
     }
   },
   computed: {
     isLogin () {
-      this.userId = getCookie("userId");
-      return this.userId;
+      this.identity = getCookie("identity");
+      return this.identity;
     }
   },
   methods: {

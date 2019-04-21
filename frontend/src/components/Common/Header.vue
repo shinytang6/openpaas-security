@@ -32,21 +32,20 @@ export default {
       }
   },
   mounted () {
-      if (this.isLogin==undefined || this.isLogin=="") {
+      var identity = this.isLogin
+      if (identity == undefined || identity == "") {
           // this.$router.replace('/login');
           this.identity = "未登录"
-      } else {
-          // 执行后续操作
-          this.identity = "管理员"
-          // this.phone = getCookie("phone");
+      } else if (identity == "学生") {
+          this.identity = "学生"
+      } else if (identity == "教师") {
+          this.identity = "教师"
       }
   },
   computed: {
       isLogin () {
-          this.userId = getCookie("userId");
-          console.log("fuck")
-          console.log(this.userId)
-          return this.userId;
+          this.identity = getCookie("identity");
+          return this.identity;
       }
   },
   methods: {
@@ -62,6 +61,7 @@ export default {
           setCookie('class', "");
           setCookie('studentId', "");
           setCookie('userId', "")
+          setCookie('identity', "")
           window.location.reload()
           this.$router.push({
               name: "/",

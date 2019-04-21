@@ -73,3 +73,26 @@ func CreateTeacher(c *gin.Context) {
 		"msg": msg,
 	})
 }
+
+func LoginTeacherApi(c *gin.Context) {
+	name := c.Query("name")
+	password := c.Query("password")
+
+	t := models.Teacher{}
+
+	teacher, err := t.GetTeacher(name, password)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	msg := fmt.Sprintf("get successful %d", teacher)
+	if teacher.Name == "" {
+		msg = fmt.Sprintf("empty result")
+		c.JSON(http.StatusNotFound, gin.H{
+			"msg": msg,
+		})
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"data": teacher,
+		"msg": msg,
+	})
+}
