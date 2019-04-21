@@ -4,7 +4,7 @@
       <el-col :span="12">
         <h5>自定义颜色</h5>
         <el-menu
-          default-active="2"
+          default-active="1"
           class="el-menu-vertical-demo"
           @open="handleOpen"
           @close="handleClose"
@@ -17,40 +17,47 @@
             <span slot="title">课程实验</span>
           </el-menu-item>
 
-          <el-menu-item index="2" @click="addExperiment" v-show="identity=='教师'">
+          <el-menu-item index="1" @click="addExperiment" v-show="identity=='教师'">
             <i class="el-icon-document"></i>
             <span slot="title">添加实验</span>
           </el-menu-item>
-          <el-menu-item index="3" @click="manageExperiment" v-show="identity=='教师'">
+          <el-menu-item index="2" @click="manageExperiment" v-show="identity=='教师'">
             <i class="el-icon-setting"></i>
             <span slot="title">管理实验</span>
           </el-menu-item>
 
-          <el-menu-item index="4" @click="goToDashboard" v-show="identity=='系统管理'">
+          <el-menu-item index="1" @click="goToDashboard" v-show="identity=='系统管理员'">
             <i class="el-icon-setting"></i>
-            <span slot="title">Dashboard</span>
+            <span slot="title">控制面板</span>
           </el-menu-item>
-          <el-menu-item index="5" @click="goToCadvisor" v-show="identity=='系统管理'">
+          <el-menu-item index="2" @click="goToCadvisor" v-show="identity=='系统管理员'">
             <i class="el-icon-setting"></i>
-            <span slot="title">Cadvisor</span>
+            <span slot="title">流量监控</span>
           </el-menu-item>
 
-          <el-menu-item index="6" @click="manageStudent" v-show="identity=='用户管理'">
+          <el-menu-item index="1" @click="manageStudent" v-show="identity=='用户管理员'">
             <i class="el-icon-setting"></i>
             <span slot="title">学生管理</span>
           </el-menu-item>
-          <el-menu-item index="7" @click="addStudent" v-show="identity=='用户管理'">
+          <el-menu-item index="2" @click="addStudent" v-show="identity=='用户管理员'">
             <i class="el-icon-setting"></i>
             <span slot="title">添加学生</span>
           </el-menu-item>
-
-          <el-menu-item index="8" @click="manageTeacher" v-show="identity=='用户管理'">
+          <el-menu-item index="3" @click="manageTeacher" v-show="identity=='用户管理员'">
             <i class="el-icon-setting"></i>
             <span slot="title">教师管理</span>
           </el-menu-item>
-          <el-menu-item index="9" @click="addTeacher" v-show="identity=='用户管理'">
+          <el-menu-item index="4" @click="addTeacher" v-show="identity=='用户管理员'">
             <i class="el-icon-setting"></i>
             <span slot="title">添加教师</span>
+          </el-menu-item>
+          <el-menu-item index="5" @click="manageSysAdmin" v-show="identity=='用户管理员'">
+            <i class="el-icon-setting"></i>
+            <span slot="title">系统管理员管理</span>
+          </el-menu-item>
+          <el-menu-item index="6" @click="addSysAdmin" v-show="identity=='用户管理员'">
+            <i class="el-icon-setting"></i>
+            <span slot="title">添加系统管理员</span>
           </el-menu-item>
 
         </el-menu>
@@ -77,6 +84,10 @@ export default {
       this.identity = "学生"
     } else if (identity == "教师") {
       this.identity = "教师"
+    } else if (identity == "系统管理员") {
+      this.identity = "系统管理员"
+    } else if (identity == "用户管理员") {
+      this.identity = "用户管理员"
     }
   },
   computed: {
@@ -129,6 +140,16 @@ export default {
     addTeacher() {
       this.$router.push({
         name: "AddTeachers",
+      });
+    },
+    manageSysAdmin() {
+      this.$router.push({
+        name: "ManageSysAdmins",
+      });
+    },
+    addSysAdmin() {
+      this.$router.push({
+        name: "AddSysAdmins",
       });
     }
   }

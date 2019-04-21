@@ -43,7 +43,7 @@ func UpdateTeacherApi(c *gin.Context) {
 	})
 }
 
-func DeletTeacher(c *gin.Context) {
+func DeleteTeacher(c *gin.Context) {
 	name := c.Query("name")
 	err := models.DeleteTeacher(name)
 	if err != nil {

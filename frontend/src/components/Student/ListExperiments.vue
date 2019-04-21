@@ -23,12 +23,13 @@ export default {
   data(){
       return {
           experimentArr: [],
+          identity: "",
       }
   },
   mounted: function(){
       var that = this
-      if (this.isLogin==undefined || this.isLogin=="") {
-      } else {
+      var identity = this.isLogin
+      if (identity == "学生") {
           this.$axios.get('/api/experiment/getall')
               .then(function (response) {
                   if (response.status == 200) {
@@ -42,10 +43,10 @@ export default {
       }
   },
   computed: {
-        isLogin () {
-            this.userId = getCookie("userId");
-            return this.userId;
-        }
+      isLogin () {
+          this.identity = getCookie("identity");
+          return this.identity;
+      }
   },
   methods: {
     showDetail: function(experiment){

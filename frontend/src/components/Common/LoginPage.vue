@@ -106,6 +106,48 @@
                                 .catch(function (error) {
                                     console.log(error);
                                 });
+                        } else if (identity == "系统管理员") {
+                            this.$axios.get('/api/sysAdmin/login?name=' + name + '&password=' + password)
+                                .then(function (response) {
+                                    if (response.status == 200) {
+                                        var data = response.data.data
+                                        setCookie('name', data.name);
+                                        setCookie('email', data.email);
+                                        setCookie('phone', data.phone);
+                                        setCookie('systemAdminId', data.systemAdminId);
+                                        setCookie('userId', data.userId)
+                                        setCookie('identity', "系统管理员")
+
+                                        window.location.reload()
+                                        that.$router.push({
+                                            name: "/",
+                                        });
+                                    }
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                });
+                        }  else if (identity == "用户管理员") {
+                            this.$axios.get('/api/userAdmin/login?name=' + name + '&password=' + password)
+                                .then(function (response) {
+                                    if (response.status == 200) {
+                                        var data = response.data.data
+                                        setCookie('name', data.name);
+                                        setCookie('email', data.email);
+                                        setCookie('phone', data.phone);
+                                        setCookie('systemAdminId', data.systemAdminId);
+                                        setCookie('userId', data.userId)
+                                        setCookie('identity', "用户管理员")
+
+                                        window.location.reload()
+                                        that.$router.push({
+                                            name: "/",
+                                        });
+                                    }
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                });
                         }
                     } else {
                         console.log('error submit!!');

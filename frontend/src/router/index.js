@@ -20,6 +20,10 @@ import ManageTeachers from "../components/UserAdmin/ManageTeachers"
 import UpdateTeachers from "../components/UserAdmin/UpdateTeachers"
 import AddTeachers from "../components/UserAdmin/AddTeachers"
 
+import ManageSysAdmins from "../components/UserAdmin/ManageSysAdmins"
+import UpdateSysAdmins from "../components/UserAdmin/UpdateSysAdmins"
+import AddSysAdmins from "../components/UserAdmin/AddSysAdmins"
+
 Vue.use(Router)
 
 export default new Router({
@@ -111,6 +115,20 @@ export default new Router({
             name: 'AddTeachers',
             component: AddTeachers
         },
-
+        {
+            path: '/useradmin/manage/sysAdmin',
+            name: 'ManageSysAdmins',
+            component: ManageSysAdmins
+        },
+        {
+            path: '/useradmin/update/sysAdmin',
+            name: 'UpdateSysAdmins',
+            component: UpdateSysAdmins
+        },
+        {
+            path: '/useradmin/add/sysAdmin',
+            name: 'AddSysAdmins',
+            component: AddSysAdmins
+        },
     ]
 })

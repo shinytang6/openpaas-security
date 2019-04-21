@@ -10,7 +10,7 @@
       text-color="#fff"
       active-text-color="#ffd04b">
       <el-menu-item index="1" class="logo"><img alt="Vue logo" src="../../assets/logo.jpg" ></el-menu-item>
-      <el-menu-item index="2" class="title">网络安全实验平台</el-menu-item>
+      <el-menu-item index="2" class="title" @click="goToFrontPage">网络安全实验平台</el-menu-item>
       <el-submenu index="3" class="identity" v-show="identity!='未登录'">
         <template slot="title">{{identity}}</template>
         <el-menu-item index="3-1" @click="goToSettings">个人设置</el-menu-item>
@@ -40,6 +40,10 @@ export default {
           this.identity = "学生"
       } else if (identity == "教师") {
           this.identity = "教师"
+      } else if (identity == "系统管理员") {
+          this.identity = "系统管理员"
+      } else if (identity == "用户管理员") {
+          this.identity = "用户管理员"
       }
   },
   computed: {
@@ -49,6 +53,11 @@ export default {
       }
   },
   methods: {
+      goToFrontPage() {
+          this.$router.push({
+              name: "/",
+          });
+      },
       login() {
           this.$router.push({
               name: "LoginPage",
