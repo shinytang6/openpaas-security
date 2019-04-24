@@ -93,3 +93,16 @@ func DeleteExperiment(c *gin.Context) {
 		"msg": msg,
 	})
 }
+
+func RestartExperiment(c *gin.Context) {
+	name := c.Query("name")
+	err := models.RestartExperiment(name)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	msg := fmt.Sprintf("restart successful")
+	c.JSON(http.StatusOK, gin.H{
+		//"data": experiment,
+		"msg": msg,
+	})
+}

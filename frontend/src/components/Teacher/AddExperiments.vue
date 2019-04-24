@@ -40,7 +40,6 @@
             return {
                 ruleForm: {
                     name: '',
-                    // region: '',
                     date1: '',
                     date2: '',
                     config: '',
@@ -48,8 +47,7 @@
                 },
                 rules: {
                     name: [
-                        { required: true, message: '请输入活动名称', trigger: 'blur' },
-                        { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                        { required: true, message: '请输入实验名称', trigger: 'blur' },
                     ],
                     date1: [
                         { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
@@ -61,8 +59,8 @@
                         { required: true, message: '请输入配置文件地址', trigger: 'blur' },
                     ],
                     people: [
-                        { required: true, message: '年龄不能为空'},
-                        { type: 'number', message: '年龄必须为数字值'}
+                        { required: true, message: '人数不能为空'},
+                        { type: 'number', message: '人数必须为数字值'}
                     ]
                 }
             };
@@ -72,20 +70,16 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         var { name, date1, date2, config, people } = this.$refs[formName].model
-                        var date_value =date2.getFullYear() + '-' + (date2.getMonth() + 1) + '-' + date2.getDate() + ' ' + date2.getHours() + ':' + date2.getMinutes() + ':' + date2.getSeconds();
-                        console.log("date", date_value)
+                        var date_value = date2.getFullYear() + '-' + (date2.getMonth() + 1) + '-' + date2.getDate() + ' ' + date2.getHours() + ':' + date2.getMinutes() + ':' + date2.getSeconds();
                         var that= this
                         this.$axios.get('/api/experiment/add?name='+name+'&config='+config+'&people='+people+'&date='+date_value)
                             .then(function (response) {
                                 if(response.status == 200) {
-                                    // that.$router.push({
-                                    //     name: "Experiment",
-                                    //     // params: {
-                                    //     //     id: activity_id,
-                                    //     //     data: response.data.data
-                                    //     // }
-                                    // });
-                                    console.log(response)
+                                    that.$message({
+                                        showClose: true,
+                                        message: '实验添加成功',
+                                        type: 'success'
+                                    });
                                     that.$router.push({
                                         name: "ListExperiments",
                                     });

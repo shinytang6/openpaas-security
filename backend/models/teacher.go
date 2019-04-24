@@ -52,6 +52,22 @@ func (t *Teacher) GetTeachers() (teachers []Teacher, err error) {
 }
 
 func (t *Teacher) UpdateTeacher(name string, password string, teacherId string, email string, phone string) error {
+	if name == "" {
+		name = t.Name
+	}
+	if password == "" {
+		password = t.Password
+	}
+	if teacherId == "" {
+		teacherId = t.TeacherId
+	}
+	if email == "" {
+		email = t.Email
+	}
+	if phone == "" {
+		phone = t.Phone
+	}
+
 	_, err := db.SqlDB.Exec("UPDATE Teacher SET name=?, password=?, TeacherId=?, email=?, phone=? where name=?", name, password, teacherId, email, phone, name)
 
 	if err != nil {
@@ -78,4 +94,22 @@ func CreateTeacher(name string, password string, teacherId string, email string,
 	}
 
 	return nil
+}
+
+
+func GetTeacherByName(name string) (teacher Teacher, err error) {
+	rows, err := db.SqlDB.Query("SELECT * FROM Teacher where name=?", name)
+	defer rows.Close()
+
+	if err != nil {
+		return
+	}
+
+	rows.Next()
+	rows.Scan(&teacher.UserId, &teacher.Password, &teacher.Name, &teacher.TeacherId, &teacher.Email, &teacher.Phone)
+
+	if err = rows.Err(); err != nil {
+		return
+	}
+	return
 }

@@ -27,8 +27,10 @@ func CreateService(serviceClient v1.ServiceInterface, service core_v1.Service)  
 }
 
 func GetService(serviceClient v1.ServiceInterface, servicementName string) (*core_v1.Service, error) {
-	deployment, err := serviceClient.Get(servicementName, meta_v1.GetOptions{})
-	return deployment, err
+	service, err := serviceClient.Get(servicementName, meta_v1.GetOptions{})
+	fmt.Println("fuck   saassa================")
+	fmt.Println(service)
+	return service, err
 }
 
 func UpdateService(serviceClient v1.ServiceInterface, service core_v1.Service) (*core_v1.Service, error) {

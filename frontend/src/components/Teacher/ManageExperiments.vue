@@ -25,8 +25,8 @@
                     prop="name">
             </el-table-column>
             <el-table-column
-                    label="实验状态"
-                    prop="status">
+                    label="实验地址"
+                    prop="Address">
             </el-table-column>
             <el-table-column
                     align="right">
@@ -39,7 +39,7 @@
                 <template slot-scope="scope">
                     <el-button
                             size="mini"
-                            @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+                            @click="handleRestart(scope.$index, scope.row)">重启</el-button>
                     <el-button
                             size="mini"
                             type="danger"
@@ -66,8 +66,7 @@
                 .then(function (response) {
                     if(response.status == 200) {
                         // that.experimentArr = response.data.data
-                        console.log("tes!!")
-                        console.log(response.data.data)
+                        console.log(response.data)
                         that.tableData = response.data.data
                     }
                 })
@@ -76,15 +75,24 @@
                 });
         },
         methods: {
-            handleEdit(index, row) {
+            handleRestart(index, row) {
                 console.log(index, row);
-                this.$router.push({
-                    name: "UpdateExperiments",
-                    params: {
-                        index: index,
-                        data: row
-                    }
-                });
+                var that = this
+                this.$axios.get('/api/experiment/restart?name='+row.name)
+                    .then(function (response) {
+                        if(response.status == 200) {
+                            // that.experimentArr = response.data.data
+                            that.$message({
+                                showClose: true,
+                                message: '重启成功',
+                                type: 'success'
+                            });
+                            that.reload()
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             },
             handleDelete(index, row) {
                 console.log(index, row);
@@ -93,8 +101,6 @@
                     .then(function (response) {
                         if(response.status == 200) {
                             // that.experimentArr = response.data.data
-                            console.log("tes!!")
-                            console.log(response.data.data)
                             that.tableData = response.data.data
                             that.reload()
                         }

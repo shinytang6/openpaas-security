@@ -20,6 +20,8 @@ func initRouter() *gin.Engine {
 
 	router.GET("/api/experiment/delete", apis.DeleteExperiment)
 
+	router.GET("/api/experiment/restart", apis.RestartExperiment)
+
 
 	router.GET("/api/student/get", apis.GetStudentApi)
 

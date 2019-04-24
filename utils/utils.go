@@ -2,16 +2,15 @@ package utils
 
 import (
 	"encoding/json"
-	"io/ioutil"
-	"k8s.io/client-go/kubernetes"
-	"strconv"
-
 	"github.com/shinytang6/openpaas-security/client"
 	deploy "github.com/shinytang6/openpaas-security/deployment"
 	svc "github.com/shinytang6/openpaas-security/service"
+	"io/ioutil"
 	apps_v1beta1 "k8s.io/api/apps/v1beta1"
 	core_v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/util/yaml"
+	"k8s.io/client-go/kubernetes"
+	"time"
 )
 
 var clientset *kubernetes.Clientset
@@ -24,7 +23,7 @@ func init() {
 	index = 0
 }
 
-func StartOneExperiment(config string) {
+func StartOneExperiment(config string, name string) {
 	index += 1
 	deploymentClient := clientset.AppsV1beta1().Deployments("default")
 	serviceClient := clientset.CoreV1().Services("default")
@@ -35,12 +34,45 @@ func StartOneExperiment(config string) {
 	svc.CreateService(serviceClient, service)
 
 	vncdeployment := GenerateDeployment("../examples/vnc.yaml")
-	vncdeployment = updateDeployment(vncdeployment, "vnc" + strconv.Itoa(index))
+	vncdeployment = updateDeployment(vncdeployment, "vnc-" + name)
 	deploy.CreateDeployment(deploymentClient, vncdeployment)
 
 	vncservice := GenerateService("../examples/vnc_svc.yaml")
-	vncservice = updateService(vncservice, "vnc" + strconv.Itoa(index))
+	vncservice = updateService(vncservice, "vnc-" + name)
 	svc.CreateService(serviceClient, vncservice)
+}
+
+func DeleteOneExperiment(name string) {
+	deploymentClient := clientset.AppsV1beta1().Deployments("default")
+	serviceClient := clientset.CoreV1().Services("default")
+
+	deploy.DeleteDeployment(deploymentClient, "vnc-" + name)
+	svc.DeleteService(serviceClient, "vnc-" + name)
+}
+
+func RestartOneExperiment(name string) {
+	deploymentClient := clientset.AppsV1beta1().Deployments("default")
+	serviceClient := clientset.CoreV1().Services("default")
+
+	deploy.DeleteDeployment(deploymentClient, "vnc-" + name)
+	svc.DeleteService(serviceClient, "vnc-" + name)
+
+	time.Sleep(5 * time.Second)
+
+	vncdeployment := GenerateDeployment("../examples/vnc.yaml")
+	vncdeployment = updateDeployment(vncdeployment, "vnc-" + name)
+	deploy.CreateDeployment(deploymentClient, vncdeployment)
+
+	vncservice := GenerateService("../examples/vnc_svc.yaml")
+	vncservice = updateService(vncservice, "vnc-" + name)
+	svc.CreateService(serviceClient, vncservice)
+}
+
+func GetOneExperiment(name string) *core_v1.Service {
+	serviceClient := clientset.CoreV1().Services("default")
+
+	svc, _ := svc.GetService(serviceClient, "vnc-" + name)
+	return svc
 }
 
 func GenerateDeployment(filename string) apps_v1beta1.Deployment {

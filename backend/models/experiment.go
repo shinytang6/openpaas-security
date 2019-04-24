@@ -14,7 +14,10 @@ type Experiment struct {
 	Name  		 string `json:"name" form:"name"`
 	Date  		 string `json:"date" form:"date"`
 	PersonId     int 	`json:"personId" form:"personId"`
+	Address    string
 }
+
+var PublicIP string = "192.168.99.100"
 
 func (e *Experiment) AddExperiment() (id int64, err error) {
 	rs, err := db.SqlDB.Exec("INSERT INTO Experiment(experimentId, name) VALUES (?, ?)", e.ExperimentId, e.Name)
@@ -37,6 +40,9 @@ func (e *Experiment) GetExperiments() (experiments []Experiment, err error) {
 	for rows.Next() {
 		var experiment Experiment
 		rows.Scan(&experiment.Id, &experiment.ExperimentId, &experiment.Name, &experiment.Date, &experiment.PersonId)
+		nodePort := utils.GetOneExperiment(experiment.Name).Spec.Ports[0].NodePort
+		port := fmt.Sprint(nodePort)
+		experiment.Address = PublicIP + ":" + port
 		experiments = append(experiments, experiment)
 	}
 	if err = rows.Err(); err != nil {
@@ -70,8 +76,8 @@ func CreateExperiment(name string, config string, people int, date string) (err 
 	var max int
 	row.Scan(&max)
 	for i:=0; i<people; i++ {
-		utils.StartOneExperiment("")
-		_, err := db.SqlDB.Query("INSERT INTO Experiment(experimentId, config, personId, date, name) VALUES(?, ?, ?, ?, ?)", max+1, config, i, date, name+"_"+strconv.Itoa(i))
+		utils.StartOneExperiment("", name+"-"+strconv.Itoa(i))
+		_, err := db.SqlDB.Query("INSERT INTO Experiment(experimentId, config, personId, date, name) VALUES(?, ?, ?, ?, ?)", max+1, config, i, date, name+"-"+strconv.Itoa(i))
 		if err != nil {
 			return err
 		}
@@ -86,5 +92,13 @@ func DeleteExperiment(name string) (err error) {
 	if err != nil {
 		return
 	}
+	fmt.Println("tl")
+	fmt.Println(name+"!!!!!!!!!!!!!!!!!!!!!")
+	utils.DeleteOneExperiment(name)
+	return err
+}
+
+func RestartExperiment(name string) (err error) {
+	utils.RestartOneExperiment(name)
 	return err
 }

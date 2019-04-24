@@ -30,9 +30,9 @@ func UpdateTeacherApi(c *gin.Context) {
 	email := c.Query("email")
 	phone := c.Query("phone")
 
-	t := models.Teacher{}
-	fmt.Println("teacher test")
-	fmt.Println(name, password, teacherId, email, phone)
+
+	t, _ := models.GetTeacherByName(name)
+
 	err := t.UpdateTeacher(name, password, teacherId, email, phone)
 	if err != nil {
 		log.Fatalln(err)
