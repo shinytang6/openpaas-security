@@ -5,11 +5,10 @@
      <div class="experiments-wrapper">
         <!--eslint-disable-next-line-->
         <div class="experiment-item" v-for="(experiment,index) in experimentArr" :key="index">
-            <!--<div class="poster" @click='showDetail(experiment.name)' :style="{ backgroundImage: 'url(' + experiment.poster+ ')' }"></div>-->
-            <div class="content">
-                <div class="title" @click="showDetail(experiment)" target="_blank">{{experiment.name}}</div>
-                <div class="time">时间：{{experiment.name}}</div>
-                <div class="place">城市：{{experiment.place}}</div>
+            <div class="content" @click="showDetail(experiment)" target="_blank">
+                <div class="title">实验：{{experiment.name}}</div>
+                <div class="time">时间：{{experiment.date}}</div>
+                <div class="time">点击进行实验</div>
             </div>
         </div>
      </div>
@@ -50,27 +49,13 @@ export default {
   },
   methods: {
     showDetail: function(experiment){
-        var that = this
-        this.$axios.get('/api/experiment/get?id='+experiment.id+'&experimentId='+experiment.experimentId+'&name='+experiment.name)
-            .then(function (response) {
-                if(response.status == 200) {
-                    that.$router.push({
-                        name: "Experiment",
-                        // params: {
-                        //     id: activity_id,
-                        //     data: response.data.data
-                        // }
-                    });
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        // this.$route.push({
-        //     name: "DetailActivity",
-        //     params:{id: activity_id}
-        // });
-        // this.$router.push({path:'/activity/'+activity_id});
+        this.$router.push({
+            name: "Experiment",
+            params: {
+                id: experiment.id,
+                address: experiment.Address
+            }
+        });
     }
   }
 }
@@ -110,6 +95,7 @@ export default {
     margin-left: 10px;
     font-size: 14px;
     color: #999;
+    cursor: pointer;
 }
 
 .experiments-wrapper .experiment-item .content .title {

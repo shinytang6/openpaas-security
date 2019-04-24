@@ -72,10 +72,9 @@ func UpdateStudentApi(c *gin.Context) {
 	email := c.Query("email")
 	phone := c.Query("phone")
 
-	fmt.Println("test")
-	fmt.Println(name, password, studentId, class, email, phone)
-	s := models.Student{}
-
+	s, _ := models.GetStudentByName(name)
+	fmt.Println("Caca!!!!!!!!!!!10")
+	fmt.Println(s)
 	err := s.UpdateStudent(name, password, studentId, class, email, phone)
 	if err != nil {
 		log.Fatalln(err)

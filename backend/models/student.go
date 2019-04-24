@@ -53,6 +53,25 @@ func (s *Student) GetStudents() (students []Student, err error) {
 }
 
 func (s *Student) UpdateStudent(name string, password string, studentId string, class string, email string, phone string) error {
+	if name == "" {
+		name = s.Name
+	}
+	if password == "" {
+		password = s.Password
+	}
+	if studentId == "" {
+		studentId = s.StudentId
+	}
+	if class == "" {
+		class = s.Class
+	}
+	if email == "" {
+		email = s.Email
+	}
+	if phone == "" {
+		phone = s.Phone
+	}
+
 	_, err := db.SqlDB.Exec("UPDATE Student SET name=?, password=?, studentId=?, class=?, email=?, phone=? where name=?", name, password, studentId, class, email, phone, name)
 
 	if err != nil {
@@ -79,4 +98,21 @@ func CreateStudent(name string, password string, studentId string, class string,
 	}
 
 	return nil
+}
+
+func GetStudentByName(name string) (student Student, err error) {
+	rows, err := db.SqlDB.Query("SELECT * FROM Student where name=?", name)
+	defer rows.Close()
+
+	if err != nil {
+		return
+	}
+
+	rows.Next()
+	rows.Scan(&student.UserId, &student.Password, &student.Name, &student.StudentId, &student.Class, &student.Email, &student.Phone)
+
+	if err = rows.Err(); err != nil {
+		return
+	}
+	return
 }

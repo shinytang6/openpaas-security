@@ -55,21 +55,66 @@
                 this.form.email = getCookie("email");
                 this.form.phone = getCookie("phone");
                 this.form.teacherId = getCookie("teacherId");
+            } else if (this.identity == "学生") {
+                this.form.name = getCookie("name");
+                this.form.email = getCookie("email");
+                this.form.phone = getCookie("phone");
+                this.form.class = getCookie("class");
+                this.form.studentId = getCookie("studentId");
             }
-
         },
         methods: {
             onSubmit() {
-                var { name, teacherId, email, phone } = this.form
                 var that = this
                 if (this.identity == "教师") {
+                    var { name, teacherId, email, phone } = this.form
                     this.$axios.get('/api/teacher/update?name=' + name + '&teacherId=' + teacherId + '&email=' + email + '&phone=' + phone)
                         .then(function (response) {
                             if (response.status == 200) {
-                                setCookie('name', name);
-                                setCookie('email', email);
-                                setCookie('phone', phone);
-                                setCookie('teacherId', teacherId);
+                                if (name != "") {
+                                    setCookie('name', name);
+                                }
+                                if (email != "") {
+                                    setCookie('email', email);
+                                }
+                                if (phone != "") {
+                                    setCookie('phone', phone);
+                                }
+                                if (teacherId != "") {
+                                    setCookie('teacherId', teacherId);
+                                }
+
+                                that.$message({
+                                    showClose: true,
+                                    message: '修改成功',
+                                    type: 'success'
+                                });
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                } else if (this.identity == "学生") {
+                    var { name, studentId, email, phone } = this.form
+                    var clas = this.form.class
+                    this.$axios.get('/api/student/update?name=' + name + '&studentId=' + studentId + '&class=' + clas + '&email=' + email + '&phone=' + phone)
+                        .then(function (response) {
+                            if (response.status == 200) {
+                                if (name != "") {
+                                    setCookie('name', name);
+                                }
+                                if (email != "") {
+                                    setCookie('email', email);
+                                }
+                                if (phone != "") {
+                                    setCookie('phone', phone);
+                                }
+                                if (clas != "") {
+                                    setCookie('class', clas);
+                                }
+                                if (studentId != "") {
+                                    setCookie('studentId', studentId);
+                                }
 
                                 that.$message({
                                     showClose: true,
