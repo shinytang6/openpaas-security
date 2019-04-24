@@ -2,6 +2,7 @@
 <template>
     <div class="students-management">
         <div class="title">学生管理</div>
+        <el-button type="primary" class="addBtn" @click="addStudent">添加</el-button>
         <el-table
                 :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
                 style="width: 100%">
@@ -108,6 +109,11 @@
                     .catch(function (error) {
                         console.log(error);
                     });
+            },
+            addStudent() {
+                this.$router.push({
+                    name: "AddStudents",
+                });
             }
         },
     }
@@ -128,5 +134,11 @@
         margin-bottom: 50px;
         margin-left: -80px;
         font-size: 20px;
+    }
+
+    .students-management .addBtn {
+        position: absolute;
+        top: 0px;
+        right: 20px;
     }
 </style>

@@ -2,6 +2,7 @@
 <template>
     <div class="teachers-management">
         <div class="title">教师管理</div>
+        <el-button type="primary" class="addBtn" @click="addTeacher">添加</el-button>
         <el-table
                 :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
                 style="width: 100%">
@@ -101,6 +102,11 @@
                     .catch(function (error) {
                         console.log(error);
                     });
+            },
+            addTeacher() {
+                this.$router.push({
+                    name: "AddTeachers",
+                });
             }
         },
     }
@@ -121,5 +127,11 @@
         margin-bottom: 50px;
         margin-left: -80px;
         font-size: 20px;
+    }
+
+    .teachers-management .addBtn {
+        position: absolute;
+        top: 0px;
+        right: 20px;
     }
 </style>

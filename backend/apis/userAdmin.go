@@ -31,3 +31,21 @@ func LoginUserAdminApi(c *gin.Context) {
 		"msg": msg,
 	})
 }
+
+func UpdateUserAdminApi(c *gin.Context) {
+	name := c.Query("name")
+	password := c.Query("password")
+	email := c.Query("email")
+	phone := c.Query("phone")
+
+	u := models.UserAdmin{}
+
+	err := u.UpdateUserAdmin(name, password, email, phone)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	msg := fmt.Sprintf("update successful")
+	c.JSON(http.StatusOK, gin.H{
+		"msg": msg,
+	})
+}

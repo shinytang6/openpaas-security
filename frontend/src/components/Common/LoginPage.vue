@@ -83,6 +83,7 @@
                                     }
                                 })
                                 .catch(function (error) {
+                                    that.$message.error('登录失败，请重试');
                                     console.log(error);
                                 });
                         } else if (identity == "教师") {
@@ -104,6 +105,7 @@
                                     }
                                 })
                                 .catch(function (error) {
+                                    that.$message.error('登录失败，请重试');
                                     console.log(error);
                                 });
                         } else if (identity == "系统管理员") {
@@ -125,6 +127,7 @@
                                     }
                                 })
                                 .catch(function (error) {
+                                    that.$message.error('登录失败，请重试');
                                     console.log(error);
                                 });
                         }  else if (identity == "用户管理员") {
@@ -146,6 +149,7 @@
                                     }
                                 })
                                 .catch(function (error) {
+                                    that.$message.error('登录失败，请重试');
                                     console.log(error);
                                 });
                         }

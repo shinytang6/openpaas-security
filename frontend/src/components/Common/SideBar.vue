@@ -39,27 +39,14 @@
             <i class="el-icon-setting"></i>
             <span slot="title">学生管理</span>
           </el-menu-item>
-          <el-menu-item index="2" @click="addStudent" v-show="identity=='用户管理员'">
-            <i class="el-icon-setting"></i>
-            <span slot="title">添加学生</span>
-          </el-menu-item>
           <el-menu-item index="3" @click="manageTeacher" v-show="identity=='用户管理员'">
             <i class="el-icon-setting"></i>
             <span slot="title">教师管理</span>
-          </el-menu-item>
-          <el-menu-item index="4" @click="addTeacher" v-show="identity=='用户管理员'">
-            <i class="el-icon-setting"></i>
-            <span slot="title">添加教师</span>
           </el-menu-item>
           <el-menu-item index="5" @click="manageSysAdmin" v-show="identity=='用户管理员'">
             <i class="el-icon-setting"></i>
             <span slot="title">系统管理员管理</span>
           </el-menu-item>
-          <el-menu-item index="6" @click="addSysAdmin" v-show="identity=='用户管理员'">
-            <i class="el-icon-setting"></i>
-            <span slot="title">添加系统管理员</span>
-          </el-menu-item>
-
         </el-menu>
       </el-col>
     </el-row>
@@ -127,19 +114,9 @@ export default {
         name: "ManageStudents",
       });
     },
-    addStudent() {
-      this.$router.push({
-        name: "AddStudents",
-      });
-    },
     manageTeacher() {
       this.$router.push({
         name: "ManageTeachers",
-      });
-    },
-    addTeacher() {
-      this.$router.push({
-        name: "AddTeachers",
       });
     },
     manageSysAdmin() {
@@ -147,11 +124,6 @@ export default {
         name: "ManageSysAdmins",
       });
     },
-    addSysAdmin() {
-      this.$router.push({
-        name: "AddSysAdmins",
-      });
-    }
   }
 }
 </script>

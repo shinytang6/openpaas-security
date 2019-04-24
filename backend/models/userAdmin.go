@@ -30,3 +30,13 @@ func (u *UserAdmin) GetUserAdmin(name string, password string) (userAdmin UserAd
 	}
 	return
 }
+
+func (u *UserAdmin) UpdateUserAdmin(name string, password string, email string, phone string) error {
+	_, err := db.SqlDB.Exec("UPDATE UserAdmin SET name=?, password=?, email=?, phone=? where name=?", name, password, email, phone, name)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

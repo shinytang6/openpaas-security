@@ -16,6 +16,9 @@
                 <el-input v-model="form.class"></el-input>
             </el-form-item>
 
+            <el-form-item label="密码" v-show="identity=='用户管理员'">
+                <el-input v-model="form.password"></el-input>
+            </el-form-item>
             <el-form-item label="电子邮箱">
                 <el-input v-model="form.email"></el-input>
             </el-form-item>
@@ -61,6 +64,10 @@
                 this.form.phone = getCookie("phone");
                 this.form.class = getCookie("class");
                 this.form.studentId = getCookie("studentId");
+            } else if (this.identity == "用户管理员") {
+                this.form.name = getCookie("name");
+                this.form.email = getCookie("email");
+                this.form.phone = getCookie("phone");
             }
         },
         methods: {
@@ -114,6 +121,31 @@
                                 }
                                 if (studentId != "") {
                                     setCookie('studentId', studentId);
+                                }
+
+                                that.$message({
+                                    showClose: true,
+                                    message: '修改成功',
+                                    type: 'success'
+                                });
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                } else if (this.identity == "用户管理员") {
+                    var { name, email, phone, password} = this.form
+                    this.$axios.get('/api/userAdmin/update?name=' + name + '&password=' + password + '&email=' + email + '&phone=' + phone)
+                        .then(function (response) {
+                            if (response.status == 200) {
+                                if (name != "") {
+                                    setCookie('name', name);
+                                }
+                                if (email != "") {
+                                    setCookie('email', email);
+                                }
+                                if (phone != "") {
+                                    setCookie('phone', phone);
                                 }
 
                                 that.$message({

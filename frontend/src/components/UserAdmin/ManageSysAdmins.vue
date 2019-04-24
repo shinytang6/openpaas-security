@@ -2,6 +2,7 @@
 <template>
     <div class="sysadmins-management">
         <div class="title">系统管理员管理</div>
+        <el-button type="primary" class="addBtn" @click="addSysAdmin">添加</el-button>
         <el-table
                 :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
                 style="width: 100%">
@@ -101,6 +102,11 @@
                     .catch(function (error) {
                         console.log(error);
                     });
+            },
+            addSysAdmin() {
+                this.$router.push({
+                    name: "AddSysAdmins",
+                });
             }
         },
     }
@@ -121,5 +127,11 @@
         margin-bottom: 50px;
         margin-left: -80px;
         font-size: 20px;
+    }
+
+    .sysadmins-management .addBtn {
+        position: absolute;
+        top: 0px;
+        right: 20px;
     }
 </style>

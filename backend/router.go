@@ -47,6 +47,8 @@ func initRouter() *gin.Engine {
 	router.GET("/api/sysAdmin/update", apis.UpdateSysAdminApi)
 	router.GET("/api/sysAdmin/add", apis.CreateSysAdmin)
 	router.GET("/api/sysAdmin/login", apis.LoginSysAdminApi)
+
 	router.GET("/api/userAdmin/login", apis.LoginUserAdminApi)
+	router.GET("/api/userAdmin/update", apis.UpdateUserAdminApi)
 	return router
 }
