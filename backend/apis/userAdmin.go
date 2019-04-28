@@ -6,6 +6,7 @@ import (
 	"github.com/shinytang6/openpaas-security/backend/models"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 
@@ -33,12 +34,13 @@ func LoginUserAdminApi(c *gin.Context) {
 }
 
 func UpdateUserAdminApi(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Query("id"))
 	name := c.Query("name")
 	password := c.Query("password")
 	email := c.Query("email")
 	phone := c.Query("phone")
 
-	u := models.UserAdmin{}
+	u, _ := models.GetUserAdminById(id)
 
 	err := u.UpdateUserAdmin(name, password, email, phone)
 	if err != nil {

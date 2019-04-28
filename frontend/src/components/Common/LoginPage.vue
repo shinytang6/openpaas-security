@@ -68,6 +68,7 @@
                                         //     // }
                                         // });
                                         var data = response.data.data
+                                        setCookie('id', data.userId);
                                         setCookie('name', data.name);
                                         setCookie('email', data.email);
                                         setCookie('phone', data.phone);
@@ -91,6 +92,7 @@
                                 .then(function (response) {
                                     if (response.status == 200) {
                                         var data = response.data.data
+                                        setCookie('id', data.userId);
                                         setCookie('name', data.name);
                                         setCookie('email', data.email);
                                         setCookie('phone', data.phone);
@@ -113,6 +115,7 @@
                                 .then(function (response) {
                                     if (response.status == 200) {
                                         var data = response.data.data
+                                        setCookie('id', data.userId);
                                         setCookie('name', data.name);
                                         setCookie('email', data.email);
                                         setCookie('phone', data.phone);
@@ -135,6 +138,7 @@
                                 .then(function (response) {
                                     if (response.status == 200) {
                                         var data = response.data.data
+                                        setCookie('id', data.userId);
                                         setCookie('name', data.name);
                                         setCookie('email', data.email);
                                         setCookie('phone', data.phone);

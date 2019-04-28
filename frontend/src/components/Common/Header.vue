@@ -64,6 +64,7 @@ export default {
           });
       },
       logOut() {
+          setCookie('id', "");
           setCookie('name', "");
           setCookie('email', "");
           setCookie('phone', "");

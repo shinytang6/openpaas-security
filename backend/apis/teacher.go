@@ -6,6 +6,7 @@ import (
 	"github.com/shinytang6/openpaas-security/backend/models"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 
@@ -24,6 +25,7 @@ func GetAllTeachersApi(c *gin.Context) {
 }
 
 func UpdateTeacherApi(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Query("id"))
 	name := c.Query("name")
 	password := c.Query("password")
 	teacherId := c.Query("teacherId")
@@ -31,7 +33,7 @@ func UpdateTeacherApi(c *gin.Context) {
 	phone := c.Query("phone")
 
 
-	t, _ := models.GetTeacherByName(name)
+	t, _ := models.GetTeacherById(id)
 
 	err := t.UpdateTeacher(name, password, teacherId, email, phone)
 	if err != nil {

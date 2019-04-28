@@ -32,11 +32,41 @@ func (u *UserAdmin) GetUserAdmin(name string, password string) (userAdmin UserAd
 }
 
 func (u *UserAdmin) UpdateUserAdmin(name string, password string, email string, phone string) error {
-	_, err := db.SqlDB.Exec("UPDATE UserAdmin SET name=?, password=?, email=?, phone=? where name=?", name, password, email, phone, name)
+	if name == "" {
+		name = u.Name
+	}
+	if password == "" {
+		password = u.Password
+	}
+
+	if email == "" {
+		email = u.Email
+	}
+	if phone == "" {
+		phone = u.Phone
+	}
+	_, err := db.SqlDB.Exec("UPDATE UserAdmin SET name=?, password=?, email=?, phone=?", name, password, email, phone)
 
 	if err != nil {
 		return err
 	}
 
 	return nil
+}
+
+func GetUserAdminById(id int) (userAdmin UserAdmin, err error) {
+	rows, err := db.SqlDB.Query("SELECT * FROM UserAdmin where userId=?", id)
+	defer rows.Close()
+
+	if err != nil {
+		return
+	}
+
+	rows.Next()
+	rows.Scan(&userAdmin.UserId, &userAdmin.Password, &userAdmin.Name, &userAdmin.UserAdminId, &userAdmin.Email, &userAdmin.Phone)
+
+	if err = rows.Err(); err != nil {
+		return
+	}
+	return
 }

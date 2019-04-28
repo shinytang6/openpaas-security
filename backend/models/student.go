@@ -72,7 +72,7 @@ func (s *Student) UpdateStudent(name string, password string, studentId string, 
 		phone = s.Phone
 	}
 
-	_, err := db.SqlDB.Exec("UPDATE Student SET name=?, password=?, studentId=?, class=?, email=?, phone=? where name=?", name, password, studentId, class, email, phone, name)
+	_, err := db.SqlDB.Exec("UPDATE Student SET name=?, password=?, studentId=?, class=?, email=?, phone=?", name, password, studentId, class, email, phone)
 
 	if err != nil {
 		return err
@@ -102,6 +102,23 @@ func CreateStudent(name string, password string, studentId string, class string,
 
 func GetStudentByName(name string) (student Student, err error) {
 	rows, err := db.SqlDB.Query("SELECT * FROM Student where name=?", name)
+	defer rows.Close()
+
+	if err != nil {
+		return
+	}
+
+	rows.Next()
+	rows.Scan(&student.UserId, &student.Password, &student.Name, &student.StudentId, &student.Class, &student.Email, &student.Phone)
+
+	if err = rows.Err(); err != nil {
+		return
+	}
+	return
+}
+
+func GetStudentById(id int) (student Student, err error) {
+	rows, err := db.SqlDB.Query("SELECT * FROM Student where userId=?", id)
 	defer rows.Close()
 
 	if err != nil {

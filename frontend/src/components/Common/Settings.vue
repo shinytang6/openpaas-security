@@ -2,6 +2,9 @@
     <div class="settings">
         <div class="title">个人设置</div>
         <el-form ref="form" :model="form" label-width="80px">
+            <el-form-item label="编号" disabled="true">
+                <el-input v-model="form.id" :disabled="true"></el-input>
+            </el-form-item>
             <el-form-item label="姓名">
                 <el-input v-model="form.name"></el-input>
             </el-form-item>
@@ -41,6 +44,7 @@
         data() {
             return {
                 form: {
+                    id: '',
                     name: '',
                     studentId: '',
                     teacherId: '',
@@ -54,17 +58,25 @@
         mounted () {
             this.identity = getCookie("identity");
             if (this.identity == "教师") {
+                this.form.id = getCookie("id");
                 this.form.name = getCookie("name");
                 this.form.email = getCookie("email");
                 this.form.phone = getCookie("phone");
                 this.form.teacherId = getCookie("teacherId");
             } else if (this.identity == "学生") {
+                this.form.id = getCookie("id");
                 this.form.name = getCookie("name");
                 this.form.email = getCookie("email");
                 this.form.phone = getCookie("phone");
                 this.form.class = getCookie("class");
                 this.form.studentId = getCookie("studentId");
             } else if (this.identity == "用户管理员") {
+                this.form.id = getCookie("id");
+                this.form.name = getCookie("name");
+                this.form.email = getCookie("email");
+                this.form.phone = getCookie("phone");
+            } else if (this.identity == "系统管理员") {
+                this.form.id = getCookie("id");
                 this.form.name = getCookie("name");
                 this.form.email = getCookie("email");
                 this.form.phone = getCookie("phone");
@@ -74,8 +86,8 @@
             onSubmit() {
                 var that = this
                 if (this.identity == "教师") {
-                    var { name, teacherId, email, phone } = this.form
-                    this.$axios.get('/api/teacher/update?name=' + name + '&teacherId=' + teacherId + '&email=' + email + '&phone=' + phone)
+                    var { id, name, teacherId, email, phone } = this.form
+                    this.$axios.get('/api/teacher/update?id=' + id + '&name=' + name + '&teacherId=' + teacherId + '&email=' + email + '&phone=' + phone)
                         .then(function (response) {
                             if (response.status == 200) {
                                 if (name != "") {
@@ -102,9 +114,9 @@
                             console.log(error);
                         });
                 } else if (this.identity == "学生") {
-                    var { name, studentId, email, phone } = this.form
+                    var { id, name, studentId, email, phone } = this.form
                     var clas = this.form.class
-                    this.$axios.get('/api/student/update?name=' + name + '&studentId=' + studentId + '&class=' + clas + '&email=' + email + '&phone=' + phone)
+                    this.$axios.get('/api/student/update?id=' + id + '&name=' + name + '&studentId=' + studentId + '&class=' + clas + '&email=' + email + '&phone=' + phone)
                         .then(function (response) {
                             if (response.status == 200) {
                                 if (name != "") {
@@ -134,8 +146,33 @@
                             console.log(error);
                         });
                 } else if (this.identity == "用户管理员") {
-                    var { name, email, phone, password} = this.form
-                    this.$axios.get('/api/userAdmin/update?name=' + name + '&password=' + password + '&email=' + email + '&phone=' + phone)
+                    var { id, name, email, phone, password} = this.form
+                    this.$axios.get('/api/userAdmin/update?id=' + id + '&name=' + name + '&password=' + password + '&email=' + email + '&phone=' + phone)
+                        .then(function (response) {
+                            if (response.status == 200) {
+                                if (name != "") {
+                                    setCookie('name', name);
+                                }
+                                if (email != "") {
+                                    setCookie('email', email);
+                                }
+                                if (phone != "") {
+                                    setCookie('phone', phone);
+                                }
+
+                                that.$message({
+                                    showClose: true,
+                                    message: '修改成功',
+                                    type: 'success'
+                                });
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                } else if (this.identity == "系统管理员") {
+                    var { id, name, email, phone} = this.form
+                    this.$axios.get('/api/sysAdmin/update?id=' + id + '&name=' + name + '&email=' + email + '&phone=' + phone)
                         .then(function (response) {
                             if (response.status == 200) {
                                 if (name != "") {

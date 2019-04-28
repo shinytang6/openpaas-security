@@ -71,11 +71,44 @@ func CreateSysAdmin(name string, password string, sysAdminId string, email strin
 }
 
 func (s *SysAdmin) UpdateSysAdmin(name string, password string, sysAdminId string, email string, phone string) error {
-	_, err := db.SqlDB.Exec("UPDATE SystemAdmin SET name=?, password=?, systemAdminId=?, email=?, phone=? where name=?", name, password, sysAdminId, email, phone, name)
+	if name == "" {
+		name = s.Name
+	}
+	if password == "" {
+		password = s.Password
+	}
+	if sysAdminId == "" {
+		sysAdminId = s.SystemAdminId
+	}
+
+	if email == "" {
+		email = s.Email
+	}
+	if phone == "" {
+		phone = s.Phone
+	}
+	_, err := db.SqlDB.Exec("UPDATE SystemAdmin SET name=?, password=?, systemAdminId=?, email=?, phone=?", name, password, sysAdminId, email, phone)
 
 	if err != nil {
 		return err
 	}
 
 	return nil
+}
+
+func GetSysAdminById(id int) (sysAdmins SysAdmin, err error) {
+	rows, err := db.SqlDB.Query("SELECT * FROM SystemAdmin where userId=?", id)
+	defer rows.Close()
+
+	if err != nil {
+		return
+	}
+
+	rows.Next()
+	rows.Scan(&sysAdmins.UserId, &sysAdmins.Password, &sysAdmins.Name, &sysAdmins.SystemAdminId, &sysAdmins.Email, &sysAdmins.Phone)
+
+	if err = rows.Err(); err != nil {
+		return
+	}
+	return
 }

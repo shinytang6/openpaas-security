@@ -65,6 +65,7 @@ func GetAllStudentsApi(c *gin.Context) {
 }
 
 func UpdateStudentApi(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Query("id"))
 	name := c.Query("name")
 	password := c.Query("password")
 	studentId := c.Query("studentId")
@@ -72,7 +73,7 @@ func UpdateStudentApi(c *gin.Context) {
 	email := c.Query("email")
 	phone := c.Query("phone")
 
-	s, _ := models.GetStudentByName(name)
+	s, _ := models.GetStudentById(id)
 	err := s.UpdateStudent(name, password, studentId, class, email, phone)
 	if err != nil {
 		log.Fatalln(err)

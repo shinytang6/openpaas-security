@@ -6,6 +6,7 @@ import (
 	"github.com/shinytang6/openpaas-security/backend/models"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 func GetAllSysAdminsApi(c *gin.Context) {
@@ -77,13 +78,14 @@ func CreateSysAdmin(c *gin.Context) {
 }
 
 func UpdateSysAdminApi(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Query("id"))
 	name := c.Query("name")
 	password := c.Query("password")
 	sysAdminId := c.Query("sysAdminId")
 	email := c.Query("email")
 	phone := c.Query("phone")
 
-	s := models.SysAdmin{}
+	s, _ := models.GetSysAdminById(id)
 
 	err := s.UpdateSysAdmin(name, password, sysAdminId, email, phone)
 	if err != nil {
