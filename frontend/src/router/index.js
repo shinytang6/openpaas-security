@@ -9,6 +9,7 @@ import Header from "../components/Common/Header"
 import SideBar from "../components/Common/SideBar"
 import DashBoard from "../components/SystemAdmin/DashBoard"
 import CAdvisor from "../components/SystemAdmin/CAdvisor"
+import EFK from "../components/SystemAdmin/EFK"
 import Settings from "../components/Common/Settings"
 import LoginPage from "../components/Common/LoginPage"
 
@@ -74,6 +75,11 @@ export default new Router({
             path: '/cadvisor',
             name: 'CAdvisor',
             component: CAdvisor
+        },
+        {
+            path: '/efk',
+            name: 'EFK',
+            component: EFK
         },
         {
             path: '/settings',

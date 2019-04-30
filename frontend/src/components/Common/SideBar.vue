@@ -34,6 +34,10 @@
             <i class="el-icon-setting"></i>
             <span slot="title">流量监控</span>
           </el-menu-item>
+          <el-menu-item index="3" @click="goToEFK" v-show="identity=='系统管理员'">
+            <i class="el-icon-setting"></i>
+            <span slot="title">日志监控</span>
+          </el-menu-item>
 
           <el-menu-item index="1" @click="manageStudent" v-show="identity=='用户管理员'">
             <i class="el-icon-setting"></i>
@@ -107,6 +111,11 @@ export default {
     goToCadvisor() {
       this.$router.push({
         name: "CAdvisor",
+      });
+    },
+    goToEFK() {
+      this.$router.push({
+        name: "EFK",
       });
     },
     manageStudent() {
