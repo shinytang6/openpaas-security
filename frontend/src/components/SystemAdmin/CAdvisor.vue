@@ -1,12 +1,17 @@
 <template>
     <div class="cadvisor">
-        <iframe class="content" src="http://192.168.99.100:4194/"></iframe>
+        <iframe class="content" :src="addr"></iframe>
     </div>
 </template>
 
 <script>
     export default {
         name: 'cadvisor',
+        data() {
+            return {
+                addr: "http://" + process.env.VUE_APP_CLUSTER_IP + ":" + process.env.VUE_APP_CLUSTER_CADVISOR_PORT
+            }
+        },
     }
 </script>
 

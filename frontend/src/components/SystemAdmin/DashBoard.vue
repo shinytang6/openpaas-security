@@ -1,12 +1,17 @@
 <template>
     <div class="dashboard">
-        <iframe class="content" src="http://192.168.99.100:30000/"></iframe>
+        <iframe class="content" :src="addr"></iframe>
     </div>
 </template>
 
 <script>
     export default {
         name: 'dashboard',
+        data() {
+            return {
+                addr: "http://" + process.env.VUE_APP_CLUSTER_IP + ":" + process.env.VUE_APP_CLUSTER_DASHBOARD_PORT
+            }
+        },
     }
 </script>
 

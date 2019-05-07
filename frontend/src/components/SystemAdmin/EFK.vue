@@ -1,12 +1,17 @@
 <template>
     <div class="efk">
-        <iframe class="content" src="http://192.168.99.100:30003/"></iframe>
+        <iframe class="content" :src="addr"></iframe>
     </div>
 </template>
 
 <script>
     export default {
         name: 'efk',
+        data() {
+            return {
+                addr: "http://" + process.env.VUE_APP_CLUSTER_IP + ":" + process.env.VUE_APP_CLUSTER_EFK_PORT
+            }
+        },
     }
 </script>
 
