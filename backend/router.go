@@ -14,7 +14,7 @@ func initRouter() *gin.Engine {
 
 	router.GET("/api/experiment/getall", apis.GetAllExperimentsApi)
 
-	router.GET("/api/experiment/get", apis.GetExperimentApi)
+	router.GET("/api/experiment/get", apis.GetExperimentsByPersonId)
 
 	router.GET("/api/experiment/add", apis.CreateExperiment)
 
@@ -23,7 +23,7 @@ func initRouter() *gin.Engine {
 	router.GET("/api/experiment/restart", apis.RestartExperiment)
 
 
-	router.GET("/api/student/get", apis.GetStudentApi)
+	//router.GET("/api/student/get", apis.GetStudentApi)
 
 	router.GET("/api/student/login", apis.LoginStudentApi)
 

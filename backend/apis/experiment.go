@@ -33,6 +33,7 @@ func AddExperimentApi(c *gin.Context) {
 
 
 func GetAllExperimentsApi(c *gin.Context) {
+	//id, _ := strconv.Atoi(c.Query("id"))
 	e := models.Experiment{}
 
 	experiments, err := e.GetExperiments()
@@ -46,20 +47,20 @@ func GetAllExperimentsApi(c *gin.Context) {
 	})
 }
 
-func GetExperimentApi(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Query("id"))
-	experimentId, _ := strconv.Atoi(c.Query("experimentId"))
-	name := c.Query("name")
+func GetExperimentsByPersonId(c *gin.Context) {
+	personId, _ := strconv.Atoi(c.Query("id"))
+	//experimentId, _ := strconv.Atoi(c.Query("experimentId"))
+	//name := c.Query("name")
 
-	e := models.Experiment{Id: id, ExperimentId: experimentId, Name: name}
+	e := models.Experiment{}
 
-	experiment, err := e.GetExperiment(id, experimentId, name)
+	experiments, err := e.GetExperimentsByPersonId(personId)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	msg := fmt.Sprintf("get successful %d", experiment)
+	msg := fmt.Sprintf("get successful %d", experiments)
 	c.JSON(http.StatusOK, gin.H{
-		"data": experiment,
+		"data": experiments,
 		"msg": msg,
 	})
 }

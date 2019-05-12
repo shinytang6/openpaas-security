@@ -29,7 +29,6 @@ export default {
      height: 500px;
      width: 100%;
      height: 100%;
-     /*background-color: red;*/
 }
 .experiment-vnc .content {
      position: fixed;

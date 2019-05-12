@@ -36,7 +36,7 @@ func (e *Experiment) GetExperiments() (experiments []Experiment, err error) {
 	if err != nil {
 		return
 	}
-	fmt.Println(rows.Columns())
+
 	for rows.Next() {
 		var experiment Experiment
 		rows.Scan(&experiment.Id, &experiment.ExperimentId, &experiment.Name, &experiment.Date, &experiment.PersonId)
@@ -52,17 +52,23 @@ func (e *Experiment) GetExperiments() (experiments []Experiment, err error) {
 }
 
 
-func (e *Experiment) GetExperiment(id int, experimentId int, name string) (experiment Experiment, err error) {
-	rows, err := db.SqlDB.Query("SELECT * FROM Experiment where id=? and experimentId=?", id, experimentId)
+func (e *Experiment) GetExperimentsByPersonId(personId int) (experiments []Experiment, err error) {
+	experiments = make([]Experiment, 0)
+	rows, err := db.SqlDB.Query("SELECT id, experimentId, name, date, personId FROM Experiment where personId=?", personId)
 	defer rows.Close()
 
 	if err != nil {
 		return
 	}
 
-	rows.Next()
-	rows.Scan(&experiment.Id, &experiment.ExperimentId, &experiment.Name)
-
+	for rows.Next() {
+		var experiment Experiment
+		rows.Scan(&experiment.Id, &experiment.ExperimentId, &experiment.Name, &experiment.Date, &experiment.PersonId)
+		nodePort := utils.GetOneExperiment(experiment.Name).Spec.Ports[0].NodePort
+		port := fmt.Sprint(nodePort)
+		experiment.Address = PublicIP + ":" + port
+		experiments = append(experiments, experiment)
+	}
 	if err = rows.Err(); err != nil {
 		return
 	}
@@ -76,8 +82,8 @@ func CreateExperiment(name string, config string, people int, date string) (err 
 	var max int
 	row.Scan(&max)
 	for i:=0; i<people; i++ {
-		utils.StartOneExperiment("", name+"-"+strconv.Itoa(i))
-		_, err := db.SqlDB.Query("INSERT INTO Experiment(experimentId, config, personId, date, name) VALUES(?, ?, ?, ?, ?)", max+1, config, i, date, name+"-"+strconv.Itoa(i))
+		utils.StartOneExperiment("", name+"-"+strconv.Itoa(i+1))
+		_, err := db.SqlDB.Query("INSERT INTO Experiment(experimentId, config, personId, date, name) VALUES(?, ?, ?, ?, ?)", max+1, config, i+1, date, name+"-"+strconv.Itoa(i+1))
 		if err != nil {
 			return err
 		}
@@ -92,8 +98,7 @@ func DeleteExperiment(name string) (err error) {
 	if err != nil {
 		return
 	}
-	fmt.Println("tl")
-	fmt.Println(name+"!!!!!!!!!!!!!!!!!!!!!")
+
 	utils.DeleteOneExperiment(name)
 	return err
 }

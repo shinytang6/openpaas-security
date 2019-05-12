@@ -28,8 +28,9 @@ export default {
   mounted: function(){
       var that = this
       var identity = this.isLogin
+      var id = this.id
       if (identity == "学生") {
-          this.$axios.get('/api/experiment/getall')
+          this.$axios.get('/api/experiment/get?id='+id)
               .then(function (response) {
                   if (response.status == 200) {
                       that.experimentArr = response.data.data
@@ -44,6 +45,7 @@ export default {
   computed: {
       isLogin () {
           this.identity = getCookie("identity");
+          this.id = getCookie("id");
           return this.identity;
       }
   },

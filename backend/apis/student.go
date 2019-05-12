@@ -9,23 +9,6 @@ import (
 	"strconv"
 )
 
-func GetStudentApi(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Query("id"))
-	experimentId, _ := strconv.Atoi(c.Query("experimentId"))
-	name := c.Query("name")
-
-	e := models.Experiment{Id: id, ExperimentId: experimentId, Name: name}
-
-	experiment, err := e.GetExperiment(id, experimentId, name)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	msg := fmt.Sprintf("get successful %d", experiment)
-	c.JSON(http.StatusOK, gin.H{
-		"data": experiment,
-		"msg": msg,
-	})
-}
 
 func LoginStudentApi(c *gin.Context) {
 	name := c.Query("name")
