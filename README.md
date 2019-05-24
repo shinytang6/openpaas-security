@@ -17,3 +17,5 @@
 6. [這些元件如何合作建立Docker環境](https://joshhu.gitbooks.io/docker_theory_install/content/DockerBible/dockersteps.html)
 7. [十分钟带你理解Kubernetes核心概念](http://www.dockone.io/article/932)
 8. [Linux性能测试工具-UnixBench](https://blog.csdn.net/gatieme/article/details/50912910)
+9. [unixbench安装使用](https://blog.csdn.net/zouli415/article/details/82837906)
+10. [Stream安装配置教程](https://wenku.baidu.com/view/258f4e4ff8c75fbfc67db231.html)
