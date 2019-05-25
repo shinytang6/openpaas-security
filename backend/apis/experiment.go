@@ -14,21 +14,43 @@ func IndexApi(c *gin.Context) {
 }
 
 func AddExperimentApi(c *gin.Context) {
-	//experimentId := c.Request.FormValue("experimentId")
-	//name := c.Request.FormValue("name")
-	experimentId, _ := strconv.Atoi(c.PostForm("experimentId"))
+	//c.Request.ParseForm()
+	//for k, v := range c.Request.PostForm {
+	//	fmt.Printf("k:%v\n", k)
+	//	fmt.Printf("v:%v\n", v)
+	//}
 	name := c.PostForm("name")
-
-	e := models.Experiment{ExperimentId: experimentId, Name: name}
-
-	ra, err := e.AddExperiment()
+	fmt.Println("name is ", name)
+	guide, err := c.FormFile("guide_path")
 	if err != nil {
-		log.Fatalln(err)
+		c.String(http.StatusBadRequest, "a bad request")
 	}
-	msg := fmt.Sprintf("insert successful %d", ra)
+	filename := guide.Filename
+	fmt.Println("filename is ", filename)
+	if err := c.SaveUploadedFile(guide, "./tempFiles/" + guide.Filename); err != nil {
+		c.String(http.StatusBadRequest, fmt.Sprintf("upload file err : %s", err.Error()))
+		return
+	}
+	msg := fmt.Sprintf("insert successful %d")
 	c.JSON(http.StatusOK, gin.H{
 		"msg": msg,
 	})
+
+	//experimentId := c.Request.FormValue("experimentId")
+	//name := c.Request.FormValue("name")
+	//experimentId, _ := strconv.Atoi(c.PostForm("experimentId"))
+	//name := c.PostForm("name")
+	//
+	//e := models.Experiment{ExperimentId: experimentId, Name: name}
+	//
+	//ra, err := e.AddExperiment()
+	//if err != nil {
+	//	log.Fatalln(err)
+	//}
+	//msg := fmt.Sprintf("insert successful %d", ra)
+	//c.JSON(http.StatusOK, gin.H{
+	//	"msg": msg,
+	//})
 }
 
 

@@ -28,8 +28,6 @@ func CreateService(serviceClient v1.ServiceInterface, service core_v1.Service)  
 
 func GetService(serviceClient v1.ServiceInterface, servicementName string) (*core_v1.Service, error) {
 	service, err := serviceClient.Get(servicementName, meta_v1.GetOptions{})
-	fmt.Println("fuck   saassa================")
-	fmt.Println(service)
 	return service, err
 }
 

@@ -40,9 +40,11 @@ func (e *Experiment) GetExperiments() (experiments []Experiment, err error) {
 	for rows.Next() {
 		var experiment Experiment
 		rows.Scan(&experiment.Id, &experiment.ExperimentId, &experiment.Name, &experiment.Date, &experiment.PersonId)
-		nodePort := utils.GetOneExperiment(experiment.Name).Spec.Ports[0].NodePort
-		port := fmt.Sprint(nodePort)
-		experiment.Address = PublicIP + ":" + port
+		if len(utils.GetOneExperiment(experiment.Name).Spec.Ports) > 0 {
+			nodePort := utils.GetOneExperiment(experiment.Name).Spec.Ports[0].NodePort
+			port := fmt.Sprint(nodePort)
+			experiment.Address = PublicIP + ":" + port
+		}
 		experiments = append(experiments, experiment)
 	}
 	if err = rows.Err(); err != nil {
@@ -64,9 +66,11 @@ func (e *Experiment) GetExperimentsByPersonId(personId int) (experiments []Exper
 	for rows.Next() {
 		var experiment Experiment
 		rows.Scan(&experiment.Id, &experiment.ExperimentId, &experiment.Name, &experiment.Date, &experiment.PersonId)
-		nodePort := utils.GetOneExperiment(experiment.Name).Spec.Ports[0].NodePort
-		port := fmt.Sprint(nodePort)
-		experiment.Address = PublicIP + ":" + port
+		if len(utils.GetOneExperiment(experiment.Name).Spec.Ports) > 0 {
+			nodePort := utils.GetOneExperiment(experiment.Name).Spec.Ports[0].NodePort
+			port := fmt.Sprint(nodePort)
+			experiment.Address = PublicIP + ":" + port
+		}
 		experiments = append(experiments, experiment)
 	}
 	if err = rows.Err(); err != nil {

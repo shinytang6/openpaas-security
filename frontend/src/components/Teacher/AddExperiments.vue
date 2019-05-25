@@ -25,6 +25,21 @@
             <el-form-item label="实验人数" prop="people">
                 <el-input type="people" v-model.number="ruleForm.people" autocomplete="off"></el-input>
             </el-form-item>
+
+            <el-form-item label="实验指导" prop="guide">
+                <el-upload
+                        class="upload"
+                        ref="upload"
+                        action=""
+                        :http-request="handleFile"
+                        :on-change="guide_path_file"
+                        :multiple="false"
+                        :limit="1"
+                        :file-list="guide_path">
+                    <el-button size="small" type="primary" @click="uploadGuide('upload')">点击上传</el-button>
+                    <div slot="tip" class="el-upload__tip">上传实验指导书</div>
+                </el-upload>
+            </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
                 <el-button @click="resetForm('ruleForm')">重置</el-button>
@@ -45,6 +60,7 @@
                     config: '',
                     people: '',
                 },
+                guide_path: "",
                 rules: {
                     name: [
                         { required: true, message: '请输入实验名称', trigger: 'blur' },
@@ -61,18 +77,44 @@
                     people: [
                         { required: true, message: '人数不能为空'},
                         { type: 'number', message: '人数必须为数字值'}
-                    ]
+                    ],
                 }
             };
         },
         methods: {
+            handleFile() {
+
+            },
+            uploadGuide(type) {
+                this.$refs.upload.clearFiles();
+                this.guide_path = [];
+            },
+            guide_path_file(file, fileList) {
+                this.guide_path = fileList
+            },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         var { name, date1, date2, config, people } = this.$refs[formName].model
                         var date_value = date2.getFullYear() + '-' + (date2.getMonth() + 1) + '-' + date2.getDate() + ' ' + date2.getHours() + ':' + date2.getMinutes() + ':' + date2.getSeconds();
+
+                        // console.log(this.guide_path)
+                        // console.log(this.guide_path[0])
+                        let formData = new FormData()
+                        formData.append('name', name)
+                        formData.append('date', date_value)
+                        formData.append('config', config)
+                        formData.append('people', people)
+                        formData.append('guide_path', this.guide_path[0] ? this.guide_path[0].raw : '')
+
+                        let conf = {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        }
+
                         var that= this
-                        this.$axios.get('/api/experiment/add?name='+name+'&config='+config+'&people='+people+'&date='+date_value)
+                        this.$axios.post('/api/experiment/add', formData, conf)
                             .then(function (response) {
                                 if(response.status == 200) {
                                     that.$message({
@@ -86,6 +128,7 @@
                                 }
                             })
                             .catch(function (error) {
+                                alert("fuck")
                                 console.log(error);
                             });
                     } else {
