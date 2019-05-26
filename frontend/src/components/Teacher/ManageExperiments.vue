@@ -29,6 +29,15 @@
                     prop="Address">
             </el-table-column>
             <el-table-column
+                    label="实验指导书"
+                    prop="fileName">
+                <template slot-scope="scope">
+                    <a :href="'http://localhost:8080/api/file/download?filehash='+scope.row.fileHash"
+                       target="_blank"
+                       class="buttonText">{{scope.row.fileName}}</a>
+                </template>
+            </el-table-column>
+            <el-table-column
                     align="right">
                 <template slot="header" slot-scope="scope">
                     <el-input

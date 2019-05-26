@@ -15,6 +15,7 @@ type Experiment struct {
 	Date  		 string `json:"date" form:"date"`
 	PersonId     int 	`json:"personId" form:"personId"`
 	FileHash     string `json:"fileHash" form:"fileHash"`
+	FileName     string `json:"fileName" form:"fileName"`
 	Address      string
 }
 
@@ -31,7 +32,7 @@ func (e *Experiment) AddExperiment() (id int64, err error) {
 
 func (e *Experiment) GetExperiments() (experiments []Experiment, err error) {
 	experiments = make([]Experiment, 0)
-	rows, err := db.SqlDB.Query("SELECT id, experimentId, name, date, personId FROM Experiment")
+	rows, err := db.SqlDB.Query("SELECT id, experimentId, name, date, personId, fileHash, fileName FROM Experiment")
 	defer rows.Close()
 
 	if err != nil {
@@ -40,7 +41,7 @@ func (e *Experiment) GetExperiments() (experiments []Experiment, err error) {
 
 	for rows.Next() {
 		var experiment Experiment
-		rows.Scan(&experiment.Id, &experiment.ExperimentId, &experiment.Name, &experiment.Date, &experiment.PersonId)
+		rows.Scan(&experiment.Id, &experiment.ExperimentId, &experiment.Name, &experiment.Date, &experiment.PersonId, &experiment.FileHash, &experiment.FileName)
 		if len(utils.GetOneExperiment(experiment.Name).Spec.Ports) > 0 {
 			nodePort := utils.GetOneExperiment(experiment.Name).Spec.Ports[0].NodePort
 			port := fmt.Sprint(nodePort)
@@ -57,7 +58,7 @@ func (e *Experiment) GetExperiments() (experiments []Experiment, err error) {
 
 func (e *Experiment) GetExperimentsByPersonId(personId int) (experiments []Experiment, err error) {
 	experiments = make([]Experiment, 0)
-	rows, err := db.SqlDB.Query("SELECT id, experimentId, name, date, personId FROM Experiment where personId=?", personId)
+	rows, err := db.SqlDB.Query("SELECT id, experimentId, name, date, personId, fileHash, fileName FROM Experiment where personId=?", personId)
 	defer rows.Close()
 
 	if err != nil {
@@ -66,7 +67,7 @@ func (e *Experiment) GetExperimentsByPersonId(personId int) (experiments []Exper
 
 	for rows.Next() {
 		var experiment Experiment
-		rows.Scan(&experiment.Id, &experiment.ExperimentId, &experiment.Name, &experiment.Date, &experiment.PersonId)
+		rows.Scan(&experiment.Id, &experiment.ExperimentId, &experiment.Name, &experiment.Date, &experiment.PersonId, &experiment.FileHash, &experiment.FileName)
 		if len(utils.GetOneExperiment(experiment.Name).Spec.Ports) > 0 {
 			nodePort := utils.GetOneExperiment(experiment.Name).Spec.Ports[0].NodePort
 			port := fmt.Sprint(nodePort)
@@ -81,14 +82,14 @@ func (e *Experiment) GetExperimentsByPersonId(personId int) (experiments []Exper
 }
 
 
-func CreateExperiment(name string, config string, people int, date string) (err error) {
+func CreateExperiment(name string, config string, people int, date string, fileHash string, fileName string) (err error) {
 	// wtf??? QueryRow
 	row := db.SqlDB.QueryRow("SELECT max(experimentId) FROM Experiment")
 	var max int
 	row.Scan(&max)
 	for i:=0; i<people; i++ {
 		utils.StartOneExperiment("", name+"-"+strconv.Itoa(i+1))
-		_, err := db.SqlDB.Query("INSERT INTO Experiment(experimentId, config, personId, date, name) VALUES(?, ?, ?, ?, ?)", max+1, config, i+1, date, name+"-"+strconv.Itoa(i+1))
+		_, err := db.SqlDB.Query("INSERT INTO Experiment(experimentId, config, personId, date, name, fileHash, fileName) VALUES(?, ?, ?, ?, ?, ?, ?)", max+1, config, i+1, date, name+"-"+strconv.Itoa(i+1), fileHash, fileName)
 		if err != nil {
 			return err
 		}

@@ -68,7 +68,7 @@ func AddExperimentApi(c *gin.Context) {
 
 	models.UpdateFileMeta(fileMeta)
 
-	err = models.CreateExperiment(name, config, people, date)
+	err = models.CreateExperiment(name, config, people, date, fileMeta.FileSha1, filename)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -135,7 +135,7 @@ func CreateExperiment(c *gin.Context) {
 	people, _ := strconv.Atoi(c.Query("people"))
 	date := c.Query("date")
 
-	err := models.CreateExperiment(name, config, people, date)
+	err := models.CreateExperiment(name, config, people, date, "1", "1")
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -183,28 +183,12 @@ func TestExperiment(c *gin.Context) {
 	})
 }
 
-func TestExperiment1(c *gin.Context) {
-	//c.Header("content-disposition", `attachment; filename=` + "chat.py")
-	//c.Writer.Header().Add("Content-Type", "application/octet-stream")
+func DownloadFile(c *gin.Context) {
 	filehash := c.Query("filehash")
 	fMeta := models.GetFileMeta(filehash)
 
-	//f, err := os.Open(fMeta.Location)
-	//if err != nil {
-	//	return
-	//}
-	//defer f.Close()
-	//
-	//data, err := ioutil.ReadAll(f)
-	//if err != nil {
-	//	return
-	//}
 	c.Writer.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", fMeta.FileName))//fmt.Sprintf("attachment; filename=%s", filename)对下载的文件重命名
 	c.Writer.Header().Add("Content-Type", "application/octet-stream")
 
 	c.File(fMeta.Location)
-	//c.JSON(http.StatusOK, gin.H{
-	//	//"data": experiment,
-	//	"msg": data,
-	//})
 }

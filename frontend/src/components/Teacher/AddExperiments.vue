@@ -31,6 +31,7 @@
                         class="upload"
                         ref="upload"
                         action=""
+                        accept=".pdf,.doc,.docs,.txt,.PDF,.DOC,.DOCS,.TXT,.xls,.xlsx"
                         :http-request="handleFile"
                         :on-change="guide_path_file"
                         :multiple="false"
