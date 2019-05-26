@@ -51,10 +51,16 @@ export default {
   },
   methods: {
     showDetail: function(experiment){
+        console.log(experiment)
         this.$router.push({
             name: "Experiment",
             params: {
                 id: experiment.id,
+                name: experiment.name,
+                date: experiment.date,
+                fileHash: experiment.fileHash,
+                fileName: experiment.fileName,
+                desc: experiment.description,
                 address: experiment.Address
             }
         });

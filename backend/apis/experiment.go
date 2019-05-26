@@ -24,6 +24,7 @@ func AddExperimentApi(c *gin.Context) {
 	//	fmt.Printf("v:%v\n", v)
 	//}
 	name := c.PostForm("name")
+	desc := c.PostForm("desc")
 	config := c.PostForm("config")
 	people, _ := strconv.Atoi(c.PostForm("people"))
 	date := c.PostForm("date")
@@ -68,7 +69,7 @@ func AddExperimentApi(c *gin.Context) {
 
 	models.UpdateFileMeta(fileMeta)
 
-	err = models.CreateExperiment(name, config, people, date, fileMeta.FileSha1, filename)
+	err = models.CreateExperiment(name, config, people, date, fileMeta.FileSha1, filename, desc)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -135,7 +136,7 @@ func CreateExperiment(c *gin.Context) {
 	people, _ := strconv.Atoi(c.Query("people"))
 	date := c.Query("date")
 
-	err := models.CreateExperiment(name, config, people, date, "1", "1")
+	err := models.CreateExperiment(name, config, people, date, "1", "1", "1")
 	if err != nil {
 		log.Fatalln(err)
 	}

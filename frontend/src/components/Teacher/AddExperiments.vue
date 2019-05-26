@@ -19,6 +19,9 @@
                     </el-form-item>
                 </el-col>
             </el-form-item>
+            <el-form-item label="实验描述">
+                <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+            </el-form-item>
             <el-form-item label="配置文件" prop="config">
                 <el-input v-model="ruleForm.config"></el-input>
             </el-form-item>
@@ -26,7 +29,7 @@
                 <el-input type="people" v-model.number="ruleForm.people" autocomplete="off"></el-input>
             </el-form-item>
 
-            <el-form-item label="实验指导" prop="guide">
+            <el-form-item label="实验指导书" prop="guide">
                 <el-upload
                         class="upload"
                         ref="upload"
@@ -58,6 +61,8 @@
                     name: '',
                     date1: '',
                     date2: '',
+                    desc: '',
+                    description: '',
                     config: '',
                     people: '',
                 },
@@ -71,6 +76,9 @@
                     ],
                     date2: [
                         { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+                    ],
+                    desc: [
+                        { required: true, message: '请输入实验描述', trigger: 'blur' },
                     ],
                     config: [
                         { required: true, message: '请输入配置文件地址', trigger: 'blur' },
@@ -96,7 +104,7 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        var { name, date1, date2, config, people } = this.$refs[formName].model
+                        var { name, date1, date2, desc, config, people } = this.$refs[formName].model
                         var date_value = date2.getFullYear() + '-' + (date2.getMonth() + 1) + '-' + date2.getDate() + ' ' + date2.getHours() + ':' + date2.getMinutes() + ':' + date2.getSeconds();
 
                         // console.log(this.guide_path)
@@ -104,6 +112,7 @@
                         let formData = new FormData()
                         formData.append('name', name)
                         formData.append('date', date_value)
+                        formData.append('desc', desc)
                         formData.append('config', config)
                         formData.append('people', people)
                         formData.append('guide_path', this.guide_path[0] ? this.guide_path[0].raw : '')
