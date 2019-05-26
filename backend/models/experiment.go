@@ -14,7 +14,8 @@ type Experiment struct {
 	Name  		 string `json:"name" form:"name"`
 	Date  		 string `json:"date" form:"date"`
 	PersonId     int 	`json:"personId" form:"personId"`
-	Address    string
+	FileHash     string `json:"fileHash" form:"fileHash"`
+	Address      string
 }
 
 var PublicIP string = "192.168.99.100"

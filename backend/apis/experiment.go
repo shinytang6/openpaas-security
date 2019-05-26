@@ -3,10 +3,14 @@ package apis
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/shinytang6/openpaas-security/backend/models"
+	"github.com/shinytang6/openpaas-security/backend/util"
+	"io"
 	"log"
 	"net/http"
-	"github.com/shinytang6/openpaas-security/backend/models"
+	"os"
 	"strconv"
+	"time"
 )
 
 func IndexApi(c *gin.Context) {
@@ -20,17 +24,55 @@ func AddExperimentApi(c *gin.Context) {
 	//	fmt.Printf("v:%v\n", v)
 	//}
 	name := c.PostForm("name")
-	fmt.Println("name is ", name)
+	config := c.PostForm("config")
+	people, _ := strconv.Atoi(c.PostForm("people"))
+	date := c.PostForm("date")
+
 	guide, err := c.FormFile("guide_path")
 	if err != nil {
 		c.String(http.StatusBadRequest, "a bad request")
 	}
 	filename := guide.Filename
 	fmt.Println("filename is ", filename)
-	if err := c.SaveUploadedFile(guide, "./tempFiles/" + guide.Filename); err != nil {
-		c.String(http.StatusBadRequest, fmt.Sprintf("upload file err : %s", err.Error()))
+
+	fileMeta := models.FileMeta{
+		FileName: filename,
+		Location: "./tempFiles/" + guide.Filename,
+		UploadAt: time.Now().Format("2006-01-02 15:04:05"),
+		FileSize: guide.Size,
+	}
+
+	//if err := c.SaveUploadedFile(guide, "./tempFiles/" + guide.Filename); err != nil {
+	//	c.String(http.StatusBadRequest, fmt.Sprintf("upload file err : %s", err.Error()))
+	//	return
+	//}
+
+	// 原生创建法
+	newFile, err := os.Create("./tempFiles/"+filename)
+	if err != nil {
+		fmt.Println("Failed to create file, err:%s\n", err.Error())
 		return
 	}
+	defer newFile.Close()
+
+	file, _ := guide.Open()
+	_, error := io.Copy(newFile, file)
+
+	if error != nil {
+		fmt.Println("Failed to save data into file, err: %s\n", err.Error())
+		return
+	}
+
+	newFile.Seek(0, 0)
+	fileMeta.FileSha1 = util.FileSha1(newFile)
+
+	models.UpdateFileMeta(fileMeta)
+
+	err = models.CreateExperiment(name, config, people, date)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
 	msg := fmt.Sprintf("insert successful %d")
 	c.JSON(http.StatusOK, gin.H{
 		"msg": msg,
@@ -128,4 +170,41 @@ func RestartExperiment(c *gin.Context) {
 		//"data": experiment,
 		"msg": msg,
 	})
+}
+
+func TestExperiment(c *gin.Context) {
+	//c.Header("content-disposition", `attachment; filename=` + "chat.py")
+	//c.Writer.Header().Add("Content-Type", "application/octet-stream")
+	filehash := c.Query("filehash")
+	fMeta := models.GetFileMeta(filehash)
+	c.JSON(http.StatusOK, gin.H{
+		//"data": experiment,
+		"msg": fMeta,
+	})
+}
+
+func TestExperiment1(c *gin.Context) {
+	//c.Header("content-disposition", `attachment; filename=` + "chat.py")
+	//c.Writer.Header().Add("Content-Type", "application/octet-stream")
+	filehash := c.Query("filehash")
+	fMeta := models.GetFileMeta(filehash)
+
+	//f, err := os.Open(fMeta.Location)
+	//if err != nil {
+	//	return
+	//}
+	//defer f.Close()
+	//
+	//data, err := ioutil.ReadAll(f)
+	//if err != nil {
+	//	return
+	//}
+	c.Writer.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", fMeta.FileName))//fmt.Sprintf("attachment; filename=%s", filename)对下载的文件重命名
+	c.Writer.Header().Add("Content-Type", "application/octet-stream")
+
+	c.File(fMeta.Location)
+	//c.JSON(http.StatusOK, gin.H{
+	//	//"data": experiment,
+	//	"msg": data,
+	//})
 }
