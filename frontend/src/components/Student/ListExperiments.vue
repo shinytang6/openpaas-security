@@ -5,11 +5,16 @@
      <div class="experiments-wrapper">
         <!--eslint-disable-next-line-->
         <div class="experiment-item" v-for="(experiment,index) in experimentArr" :key="index">
-            <div class="content" @click="showDetail(experiment)" target="_blank">
-                <div class="title">实验：{{experiment.name}}</div>
-                <div class="time">时间：{{experiment.date}}</div>
-                <div class="time">点击进行实验</div>
-            </div>
+            <el-card :body-style="{ padding: '0px' }">
+                <img src="../../assets/exp.jpg" class="image">
+                <div style="padding: 14px;">
+                    <span>实验：{{experiment.name}}</span>
+                    <div class="bottom clearfix">
+                        <time class="time">{{ experiment.date }}</time>
+                        <el-button type="text" class="button" @click="showDetail(experiment)">点击进行实验</el-button>
+                    </div>
+                </div>
+            </el-card>
         </div>
      </div>
 </div>
@@ -80,13 +85,13 @@ export default {
 .experiments-wrapper {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 136px;
+    margin-top: 120px;
 }
 
 .experiments-wrapper .experiment-item {
-    flex: 0 0 33%;
+    flex: 0 0 25%;
     margin-bottom: 30px;
-
+    margin-left: 30px;
 }
 
 .experiments-wrapper .experiment-item .poster {
@@ -113,7 +118,20 @@ export default {
     margin-bottom: 15px;
     cursor: pointer;
 }
-.experiments-wrapper .experiment-item .content .time {
+
+
+.experiments-wrapper .experiment-item .bottom {
+    margin-top: 13px;
+    line-height: 12px;
+}
+.experiments-wrapper .experiment-item .time {
    margin-bottom: 5px;
+    font-size: 13px;
+    color: #999;
+}
+
+.experiments-wrapper .experiment-item .button {
+    padding: 0;
+    float: right;
 }
 </style>

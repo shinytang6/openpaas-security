@@ -19,16 +19,15 @@
                     </el-form-item>
                 </el-col>
             </el-form-item>
-            <el-form-item label="实验描述">
-                <el-input type="textarea" v-model="ruleForm.desc"></el-input>
-            </el-form-item>
             <el-form-item label="配置文件" prop="config">
                 <el-input v-model="ruleForm.config"></el-input>
             </el-form-item>
             <el-form-item label="实验人数" prop="people">
                 <el-input type="people" v-model.number="ruleForm.people" autocomplete="off"></el-input>
             </el-form-item>
-
+            <el-form-item label="实验描述">
+                <el-input type="textarea" v-model="ruleForm.desc" :rows="6"></el-input>
+            </el-form-item>
             <el-form-item label="实验指导书" prop="guide">
                 <el-upload
                         class="upload"
@@ -41,7 +40,7 @@
                         :limit="1"
                         :file-list="guide_path">
                     <el-button size="small" type="primary" @click="uploadGuide('upload')">点击上传</el-button>
-                    <div slot="tip" class="el-upload__tip">上传实验指导书</div>
+                    <!--<div slot="tip" class="el-upload__tip">上传实验指导书</div>-->
                 </el-upload>
             </el-form-item>
             <el-form-item>
