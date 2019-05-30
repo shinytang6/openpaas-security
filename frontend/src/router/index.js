@@ -24,6 +24,7 @@ import AddTeachers from "../components/UserAdmin/AddTeachers"
 import ManageSysAdmins from "../components/UserAdmin/ManageSysAdmins"
 import UpdateSysAdmins from "../components/UserAdmin/UpdateSysAdmins"
 import AddSysAdmins from "../components/UserAdmin/AddSysAdmins"
+import AuthConfig from "../components/UserAdmin/AuthConfig"
 
 Vue.use(Router)
 
@@ -135,6 +136,11 @@ export default new Router({
             path: '/useradmin/add/sysAdmin',
             name: 'AddSysAdmins',
             component: AddSysAdmins
+        },
+        {
+            path: '/useradmin/config',
+            name: 'AuthConfig',
+            component: AuthConfig
         },
     ]
 })

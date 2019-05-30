@@ -43,13 +43,17 @@
             <i class="el-icon-setting"></i>
             <span slot="title">学生管理</span>
           </el-menu-item>
-          <el-menu-item index="3" @click="manageTeacher" v-show="identity=='用户管理员'">
+          <el-menu-item index="2" @click="manageTeacher" v-show="identity=='用户管理员'">
             <i class="el-icon-setting"></i>
             <span slot="title">教师管理</span>
           </el-menu-item>
-          <el-menu-item index="5" @click="manageSysAdmin" v-show="identity=='用户管理员'">
+          <el-menu-item index="3" @click="manageSysAdmin" v-show="identity=='用户管理员'">
             <i class="el-icon-setting"></i>
             <span slot="title">系统管理员管理</span>
+          </el-menu-item>
+          <el-menu-item index="4" @click="authConfig" v-show="identity=='用户管理员'">
+            <i class="el-icon-setting"></i>
+            <span slot="title">用户授权配置</span>
           </el-menu-item>
         </el-menu>
       </el-col>
@@ -133,6 +137,11 @@ export default {
         name: "ManageSysAdmins",
       });
     },
+    authConfig() {
+      this.$router.push({
+        name: "AuthConfig",
+      });
+    }
   }
 }
 </script>
