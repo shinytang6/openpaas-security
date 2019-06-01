@@ -1,0 +1,44 @@
+{
+  "apiVersion": "abac.authorization.kubernetes.io/v1beta1",
+  "kind": "Policy",
+  "spec": {
+      "group": "system:authenticated",
+      "nonResourcePath": "*",
+      "readOnly": true
+  }
+}
+{
+  "apiVersion": "abac.authorization.kubernetes.io/v1beta1",
+  "kind": "Policy",
+  "spec": {
+      "user": "teacher1",
+      "namespace": "teacher1",
+      "resource": "*",
+      "apiGroup": "*"
+   }
+}
+{
+  "apiVersion": "abac.authorization.kubernetes.io/v1beta1",
+  "kind": "Policy",
+  "spec": {
+      "user": "teacher2",
+      "namespace": "teacher2",
+      "resource": "*",
+      "apiGroup": "*"
+  }
+}
+{
+  "apiVersion": "abac.authorization.kubernetes.io/v1beta1",
+  "kind": "Policy",
+  "spec": {
+      "user": "sysAdmin",
+      "namespace": "*",
+      "resource": "*",
+      "apiGroup": "*"
+   }
+}
+
+user1,user1,1
+teacher1,teacher1,2
+teahcer2,teacher2,3
+sysAdmin,sysAdmin,4
