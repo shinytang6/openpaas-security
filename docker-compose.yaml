@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3'
 services:
   nginx:
     restart: always
@@ -11,3 +11,21 @@ services:
     ports:
       - 8080:80
     privileged: true
+
+  golang:
+    build: ./backend
+    ports:
+      - "8001:8001"
+    links:
+      - "mysql"
+    volumes:
+      - /home/tangl/workspace/Go/src/github.com/shinytang6/openpaas-security/backend:/go
+    tty: true
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:33066"
+    volumes:
+      - /home/tangl/workspace/Go/src/github.com/shinytang6/openpaas-security/data/golang-mysql/:/var/lib/mysql/
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
