@@ -12,15 +12,15 @@ services:
       - 8080:80
     privileged: true
 
-#  golang:
-#    build: ./backend
-#    ports:
-#      - "8001:8001"
-#    links:
-#      - "mysql"
-#    volumes:
-#      - /home/tangl/workspace/Go/src/github.com/shinytang6/openpaas-security/backend:/go
-#    tty: true
+  golang:
+    build: ./backend
+    ports:
+      - "8001:8001"
+    links:
+      - "mysql"
+    volumes:
+      - /home/tangl/workspace/Go/src/github.com/shinytang6/openpaas-security/backend:/go
+    tty: true
   mysql:
     image: mysql:5.7
 #    ports:
