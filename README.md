@@ -179,3 +179,20 @@ go run *.go
 完整的启动效果图如下：
 
 ![startup effect](./docs/startup.png)
+
+#### Docker Compose部署步骤
+
+1. 下载docker-compose命令
+
+2. 一键启动
+```
+cd $GOPATH/src/github.com/shinytang6/openpaas-security/
+docker-compose up -d
+``` 
+    
+3. 导入表
+```
+mysql -h x.x.x.x -u root -p(要想同步数据，仍然需要按照上述步骤手动导入表)
+```
+
+这种方法可以实现一键部署，可以直接部署在集群任意节点上并对外提供服务
