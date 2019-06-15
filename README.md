@@ -62,6 +62,10 @@
     └── utils.go
 ```
 
+### 系统架构图
+
+![architecture](./docs/architecture.png)
+
 ### 本地安装&使用
 > 仅在ubuntu下测试通过，因此以ubuntu为例进行介绍
 
@@ -72,11 +76,11 @@
 
 本平台底层基于kubernetes集群而构建，因此在搭建平台前必需构建起kubernetes集群
 
-具体的构建方式非常多，如果用于本地开发则官方建议使用minikube(单节点集群)以及kubeadm-dind(三节点集群)两种搭建方式，关于kubernetes所有相关教程都可以在其官方网站[https://kubernetes.io/docs/tutorials/hello-minikube/](https://kubernetes.io/docs/tutorials/hello-minikube/)上找到
+具体的构建方式非常多，如果用于本地开发则官方建议使用minikube(单节点集群)以及kubeadm-dind(三节点集群)两种搭建方式，关于kubernetes所有相关教程都可以在[官方网站](https://kubernetes.io/docs/tutorials/hello-minikube/)上找到
 
 这里介绍我开发环境下使用最多的集群构建方式minikube。
 
-1. 官网的[安装介绍](https://kubernetes.io/docs/setup/learning-environment/minikube/#installation)需要自备梯子(是因为组成集群的各个组件是由镜像构建出来的容器，而这些镜像的获取大部分需要梯子)，因此不是很推荐这种方法。
+1. [官网安装介绍](https://kubernetes.io/docs/setup/learning-environment/minikube/#installation)需要自备梯子(是因为组成集群的各个组件是由镜像构建出来的容器，而这些镜像的获取大部分需要梯子)，因此不是很推荐这种方法。
 2. 推荐！使用阿里云维护的[安装方案](https://yq.aliyun.com/articles/221687)
 
 根据上述安装指南安装完成minikube，以下为常用的一些命令：
@@ -87,7 +91,7 @@ minikube dashboard // 打开kubernetes dashboard
 minikube ssh // 进入集群虚拟机内部
 ```
 
-一旦正确启动集群，在命令行下我们主要通过kubectl这个工具对集群进行操作，kubectl的使用同样可以查看kubernetes官网[https://kubernetes.io/docs/reference/kubectl/overview/](https://kubernetes.io/docs/reference/kubectl/overview/)
+一旦正确启动集群，在命令行下我们主要通过kubectl这个工具对集群进行操作，kubectl的使用同样可以查看[kubernetes官网kubectl的介绍部分](https://kubernetes.io/docs/reference/kubectl/overview/)
 可以重点关注以下几个命令(前四个为我开发过程中最常用的命令)：
 ```bash
 kubectl get xxx // xxx是可以是任何集群资源, 如最常见的pod, service, deployment
@@ -100,9 +104,8 @@ kubectl run ... // 该命令的作用其实同kubectl create类似，都为创�
 **Step 2: 前端环境**
 
 本平台的前端完全基于vue.js创建，构建的方法使用的是脚手架生成工具vue-cli 3.
-要运行前端，只需要安装有nodejs的环境
 
-安装指南见[https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions-enterprise-linux-fedora-and-snap-packages](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions-enterprise-linux-fedora-and-snap-packages)
+要运行前端，只需要安装有nodejs的环境，安装指南：[https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions-enterprise-linux-fedora-and-snap-packages](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions-enterprise-linux-fedora-and-snap-packages)
 
 安装方式较为简单，安装完成可输入以下命令验证(版本>=我的版本即可)
 ```bash
@@ -172,3 +175,7 @@ go run *.go
 ```    
 
 完成上述步骤基本就可以完整地启动整个平台了！
+
+完整的启动效果图如下：
+
+![startup effect](./docs/startup.png)
