@@ -17,7 +17,7 @@ func GetAllTeachersApi(c *gin.Context) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	msg := fmt.Sprintf("get successful %d", teachers)
+	msg := fmt.Sprintf("get successful result: %+v", teachers)
 	c.JSON(http.StatusOK, gin.H{
 		"data": teachers,
 		"msg": msg,
@@ -51,9 +51,8 @@ func DeleteTeacher(c *gin.Context) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	msg := fmt.Sprintf("delete successful")
+	msg := fmt.Sprintf("delete successfully")
 	c.JSON(http.StatusOK, gin.H{
-		//"data": experiment,
 		"msg": msg,
 	})
 }
@@ -69,9 +68,8 @@ func CreateTeacher(c *gin.Context) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	msg := fmt.Sprintf("create successful")
+	msg := fmt.Sprintf("create successfully")
 	c.JSON(http.StatusOK, gin.H{
-		//"data": experiment,
 		"msg": msg,
 	})
 }
@@ -86,7 +84,7 @@ func LoginTeacherApi(c *gin.Context) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	msg := fmt.Sprintf("get successful %d", teacher)
+	msg := fmt.Sprintf("get successful result: %+v", teacher)
 	if teacher.Name == "" {
 		msg = fmt.Sprintf("empty result")
 		c.JSON(http.StatusNotFound, gin.H{

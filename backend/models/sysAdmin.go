@@ -87,7 +87,7 @@ func (s *SysAdmin) UpdateSysAdmin(name string, password string, sysAdminId strin
 	if phone == "" {
 		phone = s.Phone
 	}
-	_, err := db.SqlDB.Exec("UPDATE SystemAdmin SET name=?, password=?, systemAdminId=?, email=?, phone=?", name, password, sysAdminId, email, phone)
+	_, err := db.SqlDB.Exec("UPDATE SystemAdmin SET name=?, password=?, systemAdminId=?, email=?, phone=? where userId=?", name, password, sysAdminId, email, phone, s.UserId)
 
 	if err != nil {
 		return err

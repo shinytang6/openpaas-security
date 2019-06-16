@@ -62,6 +62,7 @@ export default new Router({
             name: 'ManageExperiments',
             component: ManageExperiments
         },
+        // UpdateExperiments这个组件暂时没有用到
         {
             path: '/teacher/update',
             name: 'UpdateExperiments',

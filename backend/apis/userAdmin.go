@@ -20,7 +20,7 @@ func LoginUserAdminApi(c *gin.Context) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	msg := fmt.Sprintf("get successful %d", userAdmin)
+	msg := fmt.Sprintf("get successful result: %+v", userAdmin)
 	if userAdmin.Name == "" {
 		msg = fmt.Sprintf("empty result")
 		c.JSON(http.StatusNotFound, gin.H{

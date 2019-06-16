@@ -45,7 +45,7 @@ func (u *UserAdmin) UpdateUserAdmin(name string, password string, email string, 
 	if phone == "" {
 		phone = u.Phone
 	}
-	_, err := db.SqlDB.Exec("UPDATE UserAdmin SET name=?, password=?, email=?, phone=?", name, password, email, phone)
+	_, err := db.SqlDB.Exec("UPDATE UserAdmin SET name=?, password=?, email=?, phone=? where userId=?", name, password, email, phone, u.UserId)
 
 	if err != nil {
 		return err

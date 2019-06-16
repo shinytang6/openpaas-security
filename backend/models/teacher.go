@@ -68,7 +68,7 @@ func (t *Teacher) UpdateTeacher(name string, password string, teacherId string, 
 		phone = t.Phone
 	}
 
-	_, err := db.SqlDB.Exec("UPDATE Teacher SET name=?, password=?, TeacherId=?, email=?, phone=?", name, password, teacherId, email, phone)
+	_, err := db.SqlDB.Exec("UPDATE Teacher SET name=?, password=?, TeacherId=?, email=?, phone=? where userId=?", name, password, teacherId, email, phone, t.UserId)
 
 	if err != nil {
 		return err

@@ -3,6 +3,9 @@
     <div class="teacher-update">
         <div class="title">教师信息更新</div>
         <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="80px">
+            <el-form-item label="编号" disabled="true">
+                <el-input v-model="ruleForm.id" :disabled="true"></el-input>
+            </el-form-item>
             <el-form-item label="姓名">
                 <el-input v-model="ruleForm.name"></el-input>
             </el-form-item>
@@ -33,6 +36,7 @@
         data() {
             return {
                 ruleForm: {
+                    id: '',
                     name: '',
                     password: '',
                     teacherId: '',
@@ -63,6 +67,7 @@
         beforeMount: function() {
             var index = this.$route.params.index;
             var data = this.$route.params.data;
+            this.ruleForm.id = data.id
             this.ruleForm.name = data.name
             this.ruleForm.password = data.password
             this.ruleForm.teacherId = data.teacherId
@@ -75,7 +80,7 @@
                     if (valid) {
                         var { name, password, teacherId, email, phone } = this.$refs[formName].model
                         var that = this
-                        this.$axios.get('/api/teacher/update?name='+name+'&password='+password+'&teacherId='+teacherId+'&email='+email+'&phone='+phone)
+                        this.$axios.get('/api/teacher/update?id=' + id + '&name=' + name+'&password='+password+'&teacherId='+teacherId+'&email='+email+'&phone='+phone)
                             .then(function (response) {
                                 if(response.status == 200) {
                                     console.log(response)

@@ -16,7 +16,7 @@ func GetAllSysAdminsApi(c *gin.Context) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	msg := fmt.Sprintf("get successful %d", sysAdmins)
+	msg := fmt.Sprintf("get successful result: %+v", sysAdmins)
 	c.JSON(http.StatusOK, gin.H{
 		"data": sysAdmins,
 		"msg": msg,
@@ -33,7 +33,7 @@ func LoginSysAdminApi(c *gin.Context) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	msg := fmt.Sprintf("get successful %d", sysAdmin)
+	msg := fmt.Sprintf("get successful result: %+v", sysAdmin)
 	if sysAdmin.Name == "" {
 		msg = fmt.Sprintf("empty result")
 		c.JSON(http.StatusNotFound, gin.H{
@@ -52,9 +52,8 @@ func DeleteSysAdmin(c *gin.Context) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	msg := fmt.Sprintf("delete successful")
+	msg := fmt.Sprintf("delete successfully")
 	c.JSON(http.StatusOK, gin.H{
-		//"data": experiment,
 		"msg": msg,
 	})
 }
@@ -70,9 +69,8 @@ func CreateSysAdmin(c *gin.Context) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	msg := fmt.Sprintf("create successful")
+	msg := fmt.Sprintf("create successfully")
 	c.JSON(http.StatusOK, gin.H{
-		//"data": experiment,
 		"msg": msg,
 	})
 }
@@ -91,7 +89,7 @@ func UpdateSysAdminApi(c *gin.Context) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	msg := fmt.Sprintf("update successful")
+	msg := fmt.Sprintf("update successfully")
 	c.JSON(http.StatusOK, gin.H{
 		"msg": msg,
 	})

@@ -106,8 +106,6 @@
                         var { name, date1, date2, desc, config, people } = this.$refs[formName].model
                         var date_value = date2.getFullYear() + '-' + (date2.getMonth() + 1) + '-' + date2.getDate() + ' ' + date2.getHours() + ':' + date2.getMinutes() + ':' + date2.getSeconds();
 
-                        // console.log(this.guide_path)
-                        // console.log(this.guide_path[0])
                         let formData = new FormData()
                         formData.append('name', name)
                         formData.append('date', date_value)
@@ -137,7 +135,6 @@
                                 }
                             })
                             .catch(function (error) {
-                                alert("fuck")
                                 console.log(error);
                             });
                     } else {

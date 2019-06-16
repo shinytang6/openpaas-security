@@ -34,7 +34,6 @@ func AddExperimentApi(c *gin.Context) {
 		c.String(http.StatusBadRequest, "a bad request")
 	}
 	filename := guide.Filename
-	fmt.Println("filename is ", filename)
 
 	fileMeta := models.FileMeta{
 		FileName: filename,
@@ -74,7 +73,7 @@ func AddExperimentApi(c *gin.Context) {
 		log.Fatalln(err)
 	}
 
-	msg := fmt.Sprintf("insert successful %d")
+	msg := fmt.Sprintf("insert successfully")
 	c.JSON(http.StatusOK, gin.H{
 		"msg": msg,
 	})
@@ -105,7 +104,7 @@ func GetAllExperimentsApi(c *gin.Context) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	msg := fmt.Sprintf("get successful %d", experiments)
+	msg := fmt.Sprintf("get successful result: %+v", experiments)
 	c.JSON(http.StatusOK, gin.H{
 		"data": experiments,
 		"msg": msg,
@@ -123,7 +122,7 @@ func GetExperimentsByPersonId(c *gin.Context) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	msg := fmt.Sprintf("get successful %d", experiments)
+	msg := fmt.Sprintf("get successful result: %+v", experiments)
 	c.JSON(http.StatusOK, gin.H{
 		"data": experiments,
 		"msg": msg,
@@ -153,9 +152,8 @@ func DeleteExperiment(c *gin.Context) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	msg := fmt.Sprintf("delete successful")
+	msg := fmt.Sprintf("delete successfully")
 	c.JSON(http.StatusOK, gin.H{
-		//"data": experiment,
 		"msg": msg,
 	})
 }
@@ -166,9 +164,8 @@ func RestartExperiment(c *gin.Context) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	msg := fmt.Sprintf("restart successful")
+	msg := fmt.Sprintf("restart successfully")
 	c.JSON(http.StatusOK, gin.H{
-		//"data": experiment,
 		"msg": msg,
 	})
 }

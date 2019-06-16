@@ -18,6 +18,7 @@ var index int
 //var globalpath string = ""
 
 // 不能写在StartOneExperiment里面, 会报错, 所以改成导入包时就初始化client
+// 若要持久化最好将index存进数据库，这里偷懒了
 func init() {
 	clientset = client.InitClient()
 	index = 0
@@ -33,6 +34,8 @@ func StartOneExperiment(config string, name string) {
 	service := GenerateService("../examples/dvwa_svc.yaml")
 	svc.CreateService(serviceClient, service)
 
+	// 创建vnc depolyment和service资源
+	// 每一个实验都需要vnc远程桌面
 	vncdeployment := GenerateDeployment("../examples/vnc.yaml")
 	vncdeployment = updateDeployment(vncdeployment, "vnc-" + name)
 	deploy.CreateDeployment(deploymentClient, vncdeployment)
