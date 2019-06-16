@@ -2,6 +2,7 @@ package models
 
 import (
 	db "github.com/shinytang6/openpaas-security/backend/database"
+	"github.com/shinytang6/openpaas-security/backend/util"
 )
 
 type UserAdmin struct {
@@ -15,7 +16,7 @@ type UserAdmin struct {
 
 
 func (u *UserAdmin) GetUserAdmin(name string, password string) (userAdmin UserAdmin, err error) {
-	rows, err := db.SqlDB.Query("SELECT * FROM UserAdmin where name=? and password=?", name, password)
+	rows, err := db.SqlDB.Query("SELECT * FROM UserAdmin where name=? and password=?", name, util.MD5(password))
 	defer rows.Close()
 
 	if err != nil {
@@ -45,7 +46,7 @@ func (u *UserAdmin) UpdateUserAdmin(name string, password string, email string, 
 	if phone == "" {
 		phone = u.Phone
 	}
-	_, err := db.SqlDB.Exec("UPDATE UserAdmin SET name=?, password=?, email=?, phone=? where userId=?", name, password, email, phone, u.UserId)
+	_, err := db.SqlDB.Exec("UPDATE UserAdmin SET name=?, password=?, email=?, phone=? where userId=?", name, util.MD5(password), email, phone, u.UserId)
 
 	if err != nil {
 		return err

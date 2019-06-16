@@ -2,6 +2,7 @@ package models
 
 import (
 	db "github.com/shinytang6/openpaas-security/backend/database"
+	"github.com/shinytang6/openpaas-security/backend/util"
 )
 
 type SysAdmin struct {
@@ -15,7 +16,7 @@ type SysAdmin struct {
 
 
 func (s *SysAdmin) GetSysAdmin(name string, password string) (sysAdmin SysAdmin, err error) {
-	rows, err := db.SqlDB.Query("SELECT * FROM SystemAdmin where name=? and password=?", name, password)
+	rows, err := db.SqlDB.Query("SELECT * FROM SystemAdmin where name=? and password=?", name, util.MD5(password))
 	defer rows.Close()
 
 	if err != nil {
@@ -61,7 +62,7 @@ func DeleteSysAdmin(name string) (err error) {
 }
 
 func CreateSysAdmin(name string, password string, sysAdminId string, email string, phone string) error {
-	_, err := db.SqlDB.Exec("INSERT INTO SystemAdmin (name, password, systemAdminId, email, phone) VALUES(?, ?, ?, ?, ?)", name, password, sysAdminId, email, phone)
+	_, err := db.SqlDB.Exec("INSERT INTO SystemAdmin (name, password, systemAdminId, email, phone) VALUES(?, ?, ?, ?, ?)", name, util.MD5(password), sysAdminId, email, phone)
 
 	if err != nil {
 		return err
@@ -87,7 +88,7 @@ func (s *SysAdmin) UpdateSysAdmin(name string, password string, sysAdminId strin
 	if phone == "" {
 		phone = s.Phone
 	}
-	_, err := db.SqlDB.Exec("UPDATE SystemAdmin SET name=?, password=?, systemAdminId=?, email=?, phone=? where userId=?", name, password, sysAdminId, email, phone, s.UserId)
+	_, err := db.SqlDB.Exec("UPDATE SystemAdmin SET name=?, password=?, systemAdminId=?, email=?, phone=? where userId=?", name, util.MD5(password), sysAdminId, email, phone, s.UserId)
 
 	if err != nil {
 		return err

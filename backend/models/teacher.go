@@ -2,6 +2,7 @@ package models
 
 import (
 	db "github.com/shinytang6/openpaas-security/backend/database"
+	"github.com/shinytang6/openpaas-security/backend/util"
 )
 
 type Teacher struct {
@@ -15,7 +16,7 @@ type Teacher struct {
 
 
 func (t *Teacher) GetTeacher(name string, password string) (teacher Teacher, err error) {
-	rows, err := db.SqlDB.Query("SELECT * FROM Teacher where name=? and password=?", name, password)
+	rows, err := db.SqlDB.Query("SELECT * FROM Teacher where name=? and password=?", name, util.MD5(password))
 	defer rows.Close()
 
 	if err != nil {
@@ -68,7 +69,7 @@ func (t *Teacher) UpdateTeacher(name string, password string, teacherId string, 
 		phone = t.Phone
 	}
 
-	_, err := db.SqlDB.Exec("UPDATE Teacher SET name=?, password=?, TeacherId=?, email=?, phone=? where userId=?", name, password, teacherId, email, phone, t.UserId)
+	_, err := db.SqlDB.Exec("UPDATE Teacher SET name=?, password=?, TeacherId=?, email=?, phone=? where userId=?", name, util.MD5(password), teacherId, email, phone, t.UserId)
 
 	if err != nil {
 		return err
@@ -87,7 +88,7 @@ func DeleteTeacher(name string) (err error) {
 }
 
 func CreateTeacher(name string, password string, teacherId string, email string, phone string) error {
-	_, err := db.SqlDB.Exec("INSERT INTO Teacher (name, password, teacherId, email, phone) VALUES(?, ?, ?, ?, ?)", name, password, teacherId, email, phone)
+	_, err := db.SqlDB.Exec("INSERT INTO Teacher (name, password, teacherId, email, phone) VALUES(?, ?, ?, ?, ?)", name, util.MD5(password), teacherId, email, phone)
 
 	if err != nil {
 		return err
