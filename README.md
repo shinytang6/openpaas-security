@@ -180,6 +180,21 @@ go run *.go
 
 ![startup effect](./docs/startup.png)
 
+默认帐号如下：
+```
+学生帐号 & 密码：
+    student1 123456
+    student2 123456
+    student2 123456
+教师帐号 & 密码：
+    teacher1 123456
+    teacher2 123456
+用户管理帐号 & 密码：
+    userAdmin 123456
+系统管理帐号 & 密码：
+    sysAdmin 123456
+```    
+
 #### Docker Compose部署步骤
 
 1. 下载docker-compose命令
