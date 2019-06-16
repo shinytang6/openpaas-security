@@ -31,7 +31,7 @@
 ├── docker-compose.yaml  整个项目的docker配置文件
 ├── docs            文档相关
 │   └── docs.md
-├── examples        实例配置文件
+├── examples        实例配置文件(目前平台支持的实验核心配置文件都在这, 可以考虑将配置文件单独维护在一个repo, 每次创建都去那个repo拉取)
 │   ├── ca
 │   ├── dvwa_svc.yaml
 │   ├── dvwa.yaml
