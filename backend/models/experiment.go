@@ -20,6 +20,7 @@ type Experiment struct {
 	Address      string
 }
 
+// 集群IP
 var PublicIP string = "192.168.99.100"
 
 func (e *Experiment) AddExperiment() (id int64, err error) {
@@ -89,7 +90,7 @@ func CreateExperiment(name string, config string, people int, date string, fileH
 	var max int
 	row.Scan(&max)
 	for i:=0; i<people; i++ {
-		utils.StartOneExperiment("", name+"-"+strconv.Itoa(i+1))
+		utils.StartOneExperiment(config, name+"-"+strconv.Itoa(i+1))
 		_, err := db.SqlDB.Query("INSERT INTO Experiment(experimentId, config, personId, date, name, fileHash, fileName, description) VALUES(?, ?, ?, ?, ?, ?, ?, ?)", max+1, config, i+1, date, name+"-"+strconv.Itoa(i+1), fileHash, fileName, desc)
 		if err != nil {
 			return err

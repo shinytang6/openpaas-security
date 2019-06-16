@@ -2,6 +2,7 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/shinytang6/openpaas-security/client"
 	deploy "github.com/shinytang6/openpaas-security/deployment"
 	svc "github.com/shinytang6/openpaas-security/service"
@@ -26,12 +27,22 @@ func init() {
 
 func StartOneExperiment(config string, name string) {
 	index += 1
+	// 启动实验是根据yaml配置文件来创建的, 一般一个实验需要启动一个deployment资源以及service资源, 目前项目中所有试验相关配置文件都在backend/examples下
+	// 未来应该将配置文件抽离出来, 单独放在一个地方维护
+	deployment_config_file := "../examples/" + config + ".yaml"
+	service_config_file := "../examples/" + config + "_svc" + ".yaml"
+	fmt.Println(deployment_config_file, service_config_file)
+	// 初始化客户端
 	deploymentClient := clientset.AppsV1beta1().Deployments("default")
 	serviceClient := clientset.CoreV1().Services("default")
 
-	deployment := GenerateDeployment("../examples/dvwa.yaml")
+	//deployment := GenerateDeployment("../examples/dvwa.yaml")
+	deployment := GenerateDeployment(deployment_config_file)
+	deployment = updateDeployment(deployment, name)
 	deploy.CreateDeployment(deploymentClient, deployment)
-	service := GenerateService("../examples/dvwa_svc.yaml")
+	//service := GenerateService("../examples/dvwa_svc.yaml")
+	service := GenerateService(service_config_file)
+	service = updateService(service, name)
 	svc.CreateService(serviceClient, service)
 
 	// 创建vnc depolyment和service资源
@@ -49,6 +60,8 @@ func DeleteOneExperiment(name string) {
 	deploymentClient := clientset.AppsV1beta1().Deployments("default")
 	serviceClient := clientset.CoreV1().Services("default")
 
+	deploy.DeleteDeployment(deploymentClient, name)
+	svc.DeleteService(serviceClient, name)
 	deploy.DeleteDeployment(deploymentClient, "vnc-" + name)
 	svc.DeleteService(serviceClient, "vnc-" + name)
 }
